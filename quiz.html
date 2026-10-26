@@ -102,64 +102,64 @@
   // Jede Frage: q = Frage, a = Antworten (die erste ist richtig, die Reihenfolge wird gemischt), info = Erklärung.
   const QUESTIONS = [
     {
-      q: "Welche Epoche kommt zuerst?",
-      a: ["Mittelalter", "Renaissance", "Barock", "Romantik"],
-      info: "Das Mittelalter (ca. 500–1400) ist die älteste Epoche. Danach kommen Renaissance, Barock, Wiener Klassik, Romantik, Moderne und Neue Musik."
+      q: "Welche Epoche ist die älteste?",
+      a: ["Mittelalter", "Barock", "Romantik", "Neue Musik"],
+      info: "Das Mittelalter kommt zuerst. Dann Renaissance, Barock, Wiener Klassik, Romantik, Moderne und Neue Musik."
     },
     {
-      q: "Wer hat im 11. Jahrhundert die Notenlinien erfunden?",
-      a: ["Guido von Arezzo", "Johann Sebastian Bach", "Wolfgang Amadeus Mozart", "John Cage"],
-      info: "Der Mönch Guido von Arezzo schrieb die Noten auf Linien. So konnten Sänger die Tonhöhe ablesen."
+      q: "Wo gab es im Mittelalter vor allem Musik?",
+      a: ["In der Kirche", "Im Radio", "Im Kino", "Im Fußballstadion"],
+      info: "Im Mittelalter wurde vor allem in der Kirche gesungen."
     },
     {
-      q: "Was ist der Gregorianische Choral?",
-      a: ["Eine Melodie, auf Latein gesungen, ohne Instrumente", "Musik für ein großes Orchester", "Elektronische Musik aus dem Studio", "Klaviermusik für Konzerte"],
-      info: "Der Gregorianische Choral ist einstimmiger Kirchengesang auf Latein."
+      q: "Was wurde im Mittelalter erfunden?",
+      a: ["Die Notenlinien", "Die Schallplatte", "Der Computer", "Die E-Gitarre"],
+      info: "Mit Notenlinien konnte man Lieder zum ersten Mal richtig aufschreiben."
     },
     {
-      q: "Welche Erfindung aus dem Jahr 1501 hat die Musik der Renaissance verbreitet?",
-      a: ["Der Notendruck", "Das Radio", "Das Klavier", "Der Synthesizer"],
-      info: "Ottaviano Petrucci druckte 1501 in Venedig das erste große Notenbuch. Vorher musste man Noten mit der Hand abschreiben."
+      q: "Was passiert in der Renaissance mit den Noten?",
+      a: ["Sie werden zum ersten Mal gedruckt", "Sie werden verboten", "Sie werden im Computer gespeichert", "Sie werden nur noch gesungen"],
+      info: "Ab 1501 wurden Noten gedruckt. Vorher musste man sie mit der Hand abschreiben."
     },
     {
-      q: "Welches Instrument gehört zur Renaissance?",
-      a: ["Laute", "Saxofon", "Synthesizer", "Tuba"],
+      q: "Welches Instrument sieht aus wie eine Gitarre und war in der Renaissance beliebt?",
+      a: ["Die Laute", "Die Tuba", "Der Synthesizer", "Das Schlagzeug"],
       info: "Die Laute war das beliebteste Instrument der Renaissance."
     },
     {
-      q: "Zu welcher Epoche gehört der Generalbass (Basslinie mit Akkorden darüber)?",
-      a: ["Barock", "Mittelalter", "Wiener Klassik", "Neue Musik"],
-      info: "Der Generalbass ist typisch für den Barock."
-    },
-    {
       q: "Wer hat „Die vier Jahreszeiten“ geschrieben?",
-      a: ["Antonio Vivaldi", "Ludwig van Beethoven", "Frédéric Chopin", "Arnold Schönberg"],
-      info: "„Die vier Jahreszeiten“ sind vier Violinkonzerte von Vivaldi."
+      a: ["Antonio Vivaldi", "Ludwig van Beethoven", "Frédéric Chopin", "John Cage"],
+      info: "„Die vier Jahreszeiten“ sind von Vivaldi, aus dem Barock."
     },
     {
-      q: "Welche drei Komponisten gehören zur Wiener Klassik?",
-      a: ["Haydn, Mozart, Beethoven", "Bach, Händel, Vivaldi", "Chopin, Wagner, Schubert", "Debussy, Schönberg, Strawinsky"],
-      info: "Haydn, Mozart und Beethoven haben alle in Wien gearbeitet."
+      q: "Welche Epoche endet 1750, als Bach stirbt?",
+      a: ["Barock", "Mittelalter", "Romantik", "Moderne"],
+      info: "Mit dem Tod von Johann Sebastian Bach endet der Barock."
     },
     {
-      q: "Welches Instrument hat in der Wiener Klassik das Cembalo ersetzt?",
-      a: ["Das Hammerklavier", "Die Orgel", "Die Laute", "Die E-Gitarre"],
-      info: "Das Hammerklavier kann laut und leise spielen, das Cembalo nicht."
+      q: "In welcher Stadt lebten Haydn, Mozart und Beethoven?",
+      a: ["Wien", "Paris", "Berlin", "Rom"],
+      info: "Deshalb heißt die Epoche „Wiener Klassik“."
     },
     {
-      q: "Ein Leitmotiv ist eine kurze Melodie für eine Person. Welcher Komponist hat es berühmt gemacht?",
-      a: ["Richard Wagner", "Josquin des Prez", "Joseph Haydn", "Steve Reich"],
-      info: "Wagner hat in seinen Opern viele Leitmotive verwendet."
+      q: "Wer hat „Eine kleine Nachtmusik“ geschrieben?",
+      a: ["Wolfgang Amadeus Mozart", "Johann Sebastian Bach", "Frédéric Chopin", "Claude Debussy"],
+      info: "„Eine kleine Nachtmusik“ ist eines der bekanntesten Stücke von Mozart."
     },
     {
-      q: "Wer hat die Zwölftontechnik erfunden?",
-      a: ["Arnold Schönberg", "Claude Debussy", "Giovanni P. da Palestrina", "Franz Schubert"],
-      info: "Bei Schönbergs Zwölftontechnik kommen alle 12 Töne in einer festen Reihe vor. Kein Ton ist der Grundton."
+      q: "Worum geht es in der Musik der Romantik?",
+      a: ["Um Gefühle, Natur und Träume", "Um Computer", "Um Fußball", "Um Mathematik"],
+      info: "In der Romantik soll die Musik starke Gefühle zeigen."
     },
     {
-      q: "Was passiert im Stück „4′33″“ von John Cage (1952)?",
-      a: ["Der Musiker spielt 4 Minuten und 33 Sekunden lang keinen Ton", "Ein Chor singt auf Latein", "Ein Orchester spielt sehr laut", "Ein Computer spielt eine Melodie"],
-      info: "Die Musik sind die Stille und die Geräusche im Raum."
+      q: "Was passierte 1913 bei einem Konzert in Paris?",
+      a: ["Das Publikum regte sich so auf, dass es Tumult gab", "Das erste Klavier wurde gebaut", "Mozart gab ein Konzert", "Es gab einen Stromausfall"],
+      info: "Die Musik von Strawinsky war so neu, dass sich viele Leute aufgeregt haben."
+    },
+    {
+      q: "Was hört man bei dem Stück „4′33″“ von John Cage?",
+      a: ["Keine Töne, nur Stille und Geräusche im Raum", "Ein lautes Orchester", "Einen Chor", "Eine Orgel"],
+      info: "Der Musiker spielt 4 Minuten und 33 Sekunden lang keinen einzigen Ton."
     }
   ];
 

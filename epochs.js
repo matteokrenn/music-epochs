@@ -7,109 +7,99 @@ window.EPOCHS = [
     id: "medieval",
     name: "Mittelalter",
     years: "ca. 500 – 1400",
-    era: "Musik gibt es vor allem in Kirche und Kloster.",
+    era: "Musik gibt es vor allem in der Kirche.",
     artists: [
-      ["Hildegard von Bingen (1098–1179)", "Äbtissin und Komponistin"],
-      ["Pérotin (um 1200)", "Notre-Dame in Paris"],
-      ["Guillaume de Machaut (ca. 1300–1377)", "Dichter und Komponist"]
+      ["Hildegard von Bingen", "eine Nonne, die Lieder geschrieben hat"],
+      ["Guido von Arezzo", "ein Mönch und Musiklehrer"]
     ],
     characteristics: [
-      ["Einstimmig", "alle singen dieselbe Melodie"],
-      ["Gregorianischer Choral", "Kirchengesang auf Latein"],
-      ["Später: erste Mehrstimmigkeit", "mehrere Stimmen gleichzeitig"]
+      ["Alle singen dieselbe Melodie", ""],
+      ["Die Lieder sind auf Latein", ""]
     ],
     innovations: [
-      ["Notenlinien (11. Jh.)", "erfunden von Guido von Arezzo"],
-      ["Silben ut – re – mi", "zum Lernen von Liedern"],
-      ["Organum", "Choral mit 2 oder mehr Stimmen"]
+      ["Die ersten Notenlinien", "so kann man Lieder aufschreiben"],
+      ["Später singen mehrere Stimmen gleichzeitig", ""]
     ],
     instruments: [
       ["Stimme", "das wichtigste Instrument"],
       ["Orgel", ""],
-      ["Fiedel, Drehleier, Schalmei", ""]
+      ["Harfe", ""]
     ],
-    listening: { title: "Hildegard von Bingen – O virtus Sapientiae", query: "Hildegard von Bingen O virtus Sapientiae", url: "" }
+    listening: { title: "Ein Lied von Hildegard von Bingen", query: "Hildegard von Bingen O virtus Sapientiae", url: "" }
   },
   {
     id: "renaissance",
     name: "Renaissance",
     years: "ca. 1400 – 1600",
-    era: "Ein Neuanfang für die Kunst. „Renaissance“ heißt „Wiedergeburt“.",
+    era: "„Renaissance“ heißt „Neubeginn“. Kunst und Musik blühen auf.",
     artists: [
-      ["Josquin des Prez (ca. 1450–1521)", "Messen und Motetten"],
-      ["Thomas Tallis (ca. 1505–1585)", "Kirchenmusik in England"],
-      ["Giovanni P. da Palestrina (ca. 1525–1594)", "Meister der Kirchenmusik"]
+      ["Palestrina", "Musik für die Kirche"],
+      ["Thomas Tallis", "Musik für Chöre in England"]
     ],
     characteristics: [
-      ["Polyphonie", "viele gleich wichtige Stimmen"],
-      ["Vor allem Gesang", "oft ganz ohne Instrumente"],
-      ["Text gut verständlich", "die Musik malt die Wörter nach"]
+      ["Viele Stimmen singen verschiedene Melodien zusammen", ""],
+      ["Meistens wird gesungen", "oft ganz ohne Instrumente"]
     ],
     innovations: [
-      ["Notendruck (1501)", "Petrucci in Venedig"],
-      ["Madrigal", "weltliches Lied, nicht für die Kirche"],
-      ["Instrumentenfamilien", "große und kleine Instrumente spielen zusammen"]
+      ["Noten werden gedruckt (1501)", "vorher musste man sie abschreiben"],
+      ["Lieder auch für zu Hause, nicht nur für die Kirche", ""]
     ],
     instruments: [
-      ["Laute", "das beliebteste Instrument"],
+      ["Laute", "sieht aus wie eine Gitarre"],
       ["Blockflöte", ""],
-      ["Gambe, Cembalo, Orgel", ""]
+      ["Orgel", ""]
     ],
-    listening: { title: "Palestrina – Missa Papae Marcelli: Kyrie", query: "Palestrina Missa Papae Marcelli Kyrie", url: "" }
+    listening: { title: "Palestrina: Musik für einen Chor", query: "Palestrina Missa Papae Marcelli Kyrie", url: "" }
   },
   {
     id: "baroque",
     name: "Barock",
     years: "ca. 1600 – 1750",
-    era: "Endet 1750 mit dem Tod von Johann Sebastian Bach.",
+    era: "Endet 1750, als Johann Sebastian Bach stirbt.",
     artists: [
-      ["Claudio Monteverdi (1567–1643)", "frühe Opern"],
-      ["Antonio Vivaldi (1678–1741)", "Violinkonzerte"],
-      ["J. S. Bach (1685–1750), G. F. Händel (1685–1759)", "Höhepunkt des Barock"]
+      ["Johann Sebastian Bach", "Musik für Orgel und Kirche"],
+      ["Antonio Vivaldi", "„Die vier Jahreszeiten“"],
+      ["Georg Friedrich Händel", "lebte lange in London"]
     ],
     characteristics: [
-      ["Generalbass", "eine Basslinie mit Akkorden darüber"],
-      ["Dur und Moll", "statt Kirchentonarten"],
-      ["Laut und leise im Wechsel", "Terrassendynamik"]
+      ["Prächtig und verziert", ""],
+      ["Laut und leise wechseln sich ab", ""]
     ],
     innovations: [
-      ["Oper", "Monteverdi: L'Orfeo (1607)"],
-      ["Solokonzert", "ein Solist und das Orchester"],
-      ["Oratorium und Fuge", ""]
+      ["Die erste Oper", "Theater mit Gesang"],
+      ["Konzerte", "ein Solist spielt zusammen mit dem Orchester"]
     ],
     instruments: [
-      ["Geige und andere Streicher", ""],
-      ["Cembalo und Orgel", ""],
-      ["Trompete", "noch ohne Ventile"]
+      ["Geige", ""],
+      ["Cembalo", "ein Vorgänger vom Klavier"],
+      ["Orgel", ""]
     ],
-    listening: { title: "Vivaldi – Die vier Jahreszeiten: Frühling (1. Satz)", query: "Vivaldi Vier Jahreszeiten Frühling", url: "" }
+    listening: { title: "Vivaldi: Die vier Jahreszeiten, „Frühling“", query: "Vivaldi Vier Jahreszeiten Frühling", url: "" }
   },
   {
     id: "classical",
     name: "Wiener Klassik",
     years: "ca. 1750 – 1820",
-    era: "Haydn, Mozart und Beethoven arbeiten alle in Wien.",
+    era: "Die berühmtesten Komponisten leben in Wien.",
     artists: [
-      ["Joseph Haydn (1732–1809)", "„Vater“ der Sinfonie"],
-      ["Wolfgang A. Mozart (1756–1791)", "Opern, Sinfonien, Konzerte"],
-      ["Ludwig van Beethoven (1770–1827)", "Brücke zur Romantik"]
+      ["Joseph Haydn", ""],
+      ["Wolfgang Amadeus Mozart", ""],
+      ["Ludwig van Beethoven", ""]
     ],
     characteristics: [
-      ["Klar und ausgewogen", "Melodien kann man sich leicht merken"],
-      ["Melodie mit Begleitung", "eine Stimme führt, die anderen begleiten"],
-      ["Gut zum Mitsingen", "einfache, schöne Melodien"]
+      ["Klare, schöne Melodien", ""],
+      ["Man kann gut mitsummen", ""]
     ],
     innovations: [
-      ["Sonatenhauptsatzform", "ein fester Bauplan für ein Musikstück"],
-      ["Sinfonie und Streichquartett", ""],
-      ["Öffentliche Konzerte", "Musik für alle, nicht nur für Adelige"]
+      ["Die Sinfonie", "ein großes Stück für Orchester"],
+      ["Konzerte für alle Leute", "nicht nur für Reiche"]
     ],
     instruments: [
-      ["Hammerklavier", "ersetzt das Cembalo"],
-      ["Klarinette", "neu im Orchester"],
-      ["Klassisches Orchester", "Streicher, Bläser, Pauken"]
+      ["Klavier", ""],
+      ["Klarinette", ""],
+      ["Orchester", ""]
     ],
-    listening: { title: "Mozart – Eine kleine Nachtmusik (1. Satz)", query: "Mozart Eine kleine Nachtmusik", url: "" }
+    listening: { title: "Mozart: Eine kleine Nachtmusik", query: "Mozart Eine kleine Nachtmusik", url: "" }
   },
   {
     id: "romantic",
@@ -117,79 +107,71 @@ window.EPOCHS = [
     years: "ca. 1820 – 1900",
     era: "Musik über Gefühle, Natur und Träume.",
     artists: [
-      ["Franz Schubert (1797–1828)", "über 600 Lieder"],
-      ["Frédéric Chopin (1810–1849)", "Klaviermusik"],
-      ["Richard Wagner (1813–1883), Peter Tschaikowsky (1840–1893)", "Opern, Ballett"]
+      ["Franz Schubert", "viele Lieder"],
+      ["Frédéric Chopin", "Musik für Klavier"],
+      ["Peter Tschaikowsky", "„Schwanensee“"]
     ],
     characteristics: [
-      ["Starke Gefühle", ""],
-      ["Großes Orchester", "viele neue Klangfarben"],
-      ["Virtuosen", "Musiker, die extrem schwierige Stücke spielen"]
+      ["Starke Gefühle", "traurig, wild oder verträumt"],
+      ["Sehr großes Orchester", ""]
     ],
     innovations: [
-      ["Kunstlied", "Gedicht + Gesang + Klavier"],
-      ["Sinfonische Dichtung", "das Orchester erzählt eine Geschichte"],
-      ["Leitmotiv", "eine Melodie für eine Person (Wagner)"]
+      ["Musik erzählt Geschichten", ""],
+      ["Musik-Stars", "die extrem schnell spielen"]
     ],
     instruments: [
-      ["Moderner Flügel", "größer und lauter"],
-      ["Ventile für Horn und Trompete", "ab 1814"],
-      ["Tuba", "ein sehr tiefes Blechblasinstrument"]
+      ["Großer, lauter Flügel", ""],
+      ["Trompete und Horn", "jetzt mit Drückern (Ventilen)"],
+      ["Tuba", ""]
     ],
-    listening: { title: "Chopin – Nocturne op. 9 Nr. 2", query: "Chopin Nocturne op. 9 Nr. 2", url: "" }
+    listening: { title: "Chopin: ein ruhiges Klavierstück", query: "Chopin Nocturne op. 9 Nr. 2", url: "" }
   },
   {
     id: "modern",
     name: "Moderne",
     years: "ca. 1900 – 1945",
-    era: "Die alten Regeln der Harmonie werden gebrochen.",
+    era: "Komponisten probieren ganz neue Klänge aus.",
     artists: [
-      ["Claude Debussy (1862–1918)", "Impressionismus"],
-      ["Arnold Schönberg (1874–1951)", "Zwölftonmusik"],
-      ["Igor Strawinsky (1882–1971)", "„Le Sacre du printemps“"]
+      ["Claude Debussy", "Musik wie ein Gemälde"],
+      ["Igor Strawinsky", "Musik für Ballett"]
     ],
     characteristics: [
-      ["Impressionismus", "Musik malt Stimmungen, wie ein Bild"],
-      ["Atonalität", "kein Grundton, kein „Zuhause“"],
-      ["Schräge Klänge", "Dissonanzen"]
+      ["Manches klingt schräg", ""],
+      ["Musik malt Stimmungen", "wie ein Bild"]
     ],
     innovations: [
-      ["Zwölftontechnik", "alle 12 Töne in fester Reihe (Schönberg)"],
-      ["Polytonalität", "mehrere Tonarten gleichzeitig"],
-      ["Skandal in Paris (1913)", "bei „Le Sacre du printemps“"]
+      ["Musik muss nicht mehr „schön“ klingen", ""],
+      ["1913 in Paris", "das Publikum regt sich so auf, dass es Tumult gibt"]
     ],
     instruments: [
-      ["Mehr Schlagzeug", ""],
-      ["Celesta, Harfe, Saxofon", "neue Klangfarben"],
-      ["Einfluss vom Jazz", ""]
+      ["Viel Schlagzeug", ""],
+      ["Saxofon", ""],
+      ["Ideen aus dem Jazz", ""]
     ],
-    listening: { title: "Debussy – Clair de lune", query: "Debussy Clair de lune", url: "" }
+    listening: { title: "Debussy: „Mondschein“ für Klavier", query: "Debussy Clair de lune", url: "" }
   },
   {
     id: "new",
     name: "Neue Musik",
     years: "1945 – heute",
-    era: "Nach dem Zweiten Weltkrieg ist alles erlaubt.",
+    era: "Jetzt ist alles erlaubt.",
     artists: [
-      ["John Cage (1912–1992)", "Zufallsmusik"],
-      ["Karlheinz Stockhausen (1928–2007)", "elektronische Musik"],
-      ["György Ligeti (1923–2006)", "Klangflächen"]
+      ["John Cage", "Musik mit Stille und Zufall"],
+      ["Karlheinz Stockhausen", "Musik mit Elektronik"]
     ],
     characteristics: [
       ["Jedes Geräusch kann Musik sein", ""],
-      ["Zufall und strenge Regeln", "Aleatorik und Serialismus"],
-      ["Minimalismus", "kurze Muster wiederholen sich"]
+      ["Kurze Stücke wiederholen sich immer wieder", ""]
     ],
     innovations: [
-      ["Konkrete Musik (1948)", "Musik aus aufgenommenen Geräuschen"],
-      ["Elektronisches Studio in Köln (1951)", ""],
-      ["4′33″ von Cage (1952)", "ein Stück ohne einen einzigen Ton"]
+      ["Musik aus dem Computer", ""],
+      ["Ein Stück ganz ohne Töne", "„4′33″“ von John Cage (1952)"]
     ],
     instruments: [
-      ["Computer und Synthesizer", ""],
-      ["Tonband und Mikrofon", ""],
-      ["Präpariertes Klavier", "Gegenstände zwischen den Saiten"]
+      ["Computer", ""],
+      ["Synthesizer", ""],
+      ["Klavier mit Schrauben zwischen den Saiten", ""]
     ],
-    listening: { title: "Ligeti – Atmosphères (1961)", query: "Ligeti Atmosphères", url: "" }
+    listening: { title: "Ligeti: Musik wie eine Klangwolke", query: "Ligeti Atmosphères", url: "" }
   }
 ];
