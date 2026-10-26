@@ -1,6 +1,6 @@
 # Musical Eras · Musikepochen
 
-School project (music): the 7 eras of European music history in chronological order, plus a live quiz for the class.
+Schulprojekt Musik: die 7 Epochen der europäischen Musikgeschichte in der richtigen Reihenfolge, plus ein Live-Quiz für die Klasse. Hauptsprache Deutsch, etwa ein Viertel einfaches Englisch mit Übersetzung.
 
 - `index.html`: presentation, one slide per era, timeline on top, live leaderboard at the end
 - `quiz.html`: quiz for classmates (12 questions)

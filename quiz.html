@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="de">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Musical Eras Quiz</title>
+<title>Musik-Quiz</title>
 <link rel="stylesheet" href="style.css">
 <style>
   body { font-size: 18px; min-height: 100vh; display: flex; justify-content: center; }
@@ -31,6 +31,7 @@
   .bar > div { height: 100%; width: 0; background: var(--gold); transition: width 0.3s; }
 
   .question { font-size: 1.3em; line-height: 1.35; margin-bottom: 1em; }
+  .question .tr { display: block; font-size: 0.7em; color: var(--muted); font-style: italic; margin-top: 0.3em; }
   .answers { display: grid; gap: 0.6em; }
   .answers button {
     border-radius: 0.5em;
@@ -50,7 +51,6 @@
   .feedback .verdict { font-size: 1.15em; margin-bottom: 0.3em; }
   .feedback.ok .verdict { color: var(--ok); }
   .feedback.bad .verdict { color: var(--bad); }
-  .feedback .de { display: block; margin-top: 0.35em; font-size: 0.92em; }
   .actions { margin-top: 1.2em; text-align: right; }
 
   .result { text-align: center; }
@@ -62,16 +62,16 @@
 <main>
   <header>
     <div class="ornament">◆ ◆ ◆</div>
-    <h1>Musical Eras Quiz</h1>
-    <div class="de">Quiz zu den Epochen der Musik</div>
+    <h1>Musik-Quiz</h1>
+    <div class="de">Die Epochen der Musik</div>
   </header>
 
   <section class="screen" id="start">
     <form id="name-form">
-      <label for="name">Your name · Dein Name</label>
+      <label for="name">Dein Name</label>
       <input type="text" id="name" maxlength="20" autocomplete="off" required>
-      <p class="hint">12 questions, 1 point each. · 12 Fragen, 1 Punkt pro richtige Antwort.</p>
-      <button type="submit" class="btn-primary">Start →</button>
+      <p class="hint">12 Fragen, 1 Punkt pro richtige Antwort.</p>
+      <button type="submit" class="btn-primary">Los geht's →</button>
     </form>
   </section>
 
@@ -83,97 +83,85 @@
     <div class="feedback" id="feedback" hidden>
       <div class="verdict" id="verdict"></div>
       <span id="explain"></span>
-      <span class="de" id="explain-de"></span>
     </div>
-    <div class="actions"><button class="btn-primary" id="next" hidden>Next →</button></div>
+    <div class="actions"><button class="btn-primary" id="next" hidden>Weiter →</button></div>
   </section>
 
   <section class="screen result" id="end" hidden>
     <p id="end-name"></p>
     <div class="score" id="final"></div>
     <p class="de">Punkte</p>
-    <p class="save-msg" id="save-msg">Saving your score …</p>
-    <p>Look at the big screen for the leaderboard! <span class="de">Schau auf die Präsentation für die Rangliste!</span></p>
-    <button id="again">Play again · Nochmal</button>
+    <p class="save-msg" id="save-msg">Punkte werden gespeichert …</p>
+    <p>Schau auf die Präsentation, dort ist die Rangliste!</p>
+    <button id="again">Nochmal spielen</button>
   </section>
 </main>
 
 <script src="config.js"></script>
 <script src="db.js"></script>
 <script>
-  // Each question: q, answers (first one is correct, order gets shuffled), explanation EN + DE.
+  // Jede Frage: q (Deutsch) oder { en, de } (einfaches Englisch mit Übersetzung),
+  // a = Antworten (die erste ist richtig, die Reihenfolge wird gemischt), info = Erklärung.
   const QUESTIONS = [
     {
-      q: "Which era comes first?",
-      a: ["Middle Ages", "Renaissance", "Baroque", "Romantic"],
-      en: "The Middle Ages (c. 500–1400) come first, then Renaissance, Baroque, Classical, Romantic, Modern, New Music.",
-      de: "Das Mittelalter ist die älteste der sieben Epochen."
+      q: { en: "Which era is first?", de: "Welche Epoche kommt zuerst?" },
+      a: ["Mittelalter", "Renaissance", "Barock", "Romantik"],
+      info: "Das Mittelalter (ca. 500–1400) ist die älteste Epoche. Danach kommen Renaissance, Barock, Wiener Klassik, Romantik, Moderne und Neue Musik."
     },
     {
-      q: "Who put notes on lines (a staff) in the 11th century?",
-      a: ["Guido of Arezzo", "J. S. Bach", "W. A. Mozart", "John Cage"],
-      en: "The monk Guido of Arezzo used lines so singers could read the pitch.",
-      de: "Guido von Arezzo erfand die Notenlinien."
+      q: "Wer hat im 11. Jahrhundert die Notenlinien erfunden?",
+      a: ["Guido von Arezzo", "Johann Sebastian Bach", "Wolfgang Amadeus Mozart", "John Cage"],
+      info: "Der Mönch Guido von Arezzo schrieb die Noten auf Linien. So konnten Sänger die Tonhöhe ablesen."
     },
     {
-      q: "What is Gregorian chant?",
-      a: ["One melody sung in Latin, without instruments", "Music for a big orchestra", "Electronic music from a studio", "Piano music for concerts"],
-      en: "Gregorian chant is one-voice church singing in Latin.",
-      de: "Gregorianischer Choral ist einstimmiger Kirchengesang auf Latein."
+      q: "Was ist der Gregorianische Choral?",
+      a: ["Eine Melodie, auf Latein gesungen, ohne Instrumente", "Musik für ein großes Orchester", "Elektronische Musik aus dem Studio", "Klaviermusik für Konzerte"],
+      info: "Der Gregorianische Choral ist einstimmiger Kirchengesang auf Latein."
     },
     {
-      q: "Which invention from 1501 helped Renaissance music spread?",
-      a: ["Music printing", "The radio", "The piano", "The synthesizer"],
-      en: "Ottaviano Petrucci printed the first big book of polyphonic music in Venice in 1501.",
-      de: "Der Notendruck machte Musik für viel mehr Menschen zugänglich."
+      q: "Welche Erfindung aus dem Jahr 1501 hat die Musik der Renaissance verbreitet?",
+      a: ["Der Notendruck", "Das Radio", "Das Klavier", "Der Synthesizer"],
+      info: "Ottaviano Petrucci druckte 1501 in Venedig das erste große Notenbuch. Vorher musste man Noten mit der Hand abschreiben."
     },
     {
-      q: "Which instrument is typical for the Renaissance?",
-      a: ["Lute", "Saxophone", "Synthesizer", "Tuba"],
-      en: "The lute was the most popular instrument of the Renaissance.",
-      de: "Die Laute war das beliebteste Instrument der Renaissance."
+      q: { en: "Which instrument is from the Renaissance?", de: "Welches Instrument gehört zur Renaissance?" },
+      a: ["Laute", "Saxofon", "Synthesizer", "Tuba"],
+      info: "Die Laute war das beliebteste Instrument der Renaissance."
     },
     {
-      q: "A bass line with chords played below the music is called basso continuo. In which era?",
-      a: ["Baroque", "Middle Ages", "Classical", "New Music"],
-      en: "Basso continuo is the typical foundation of Baroque music.",
-      de: "Der Generalbass ist typisch für den Barock."
+      q: "Zu welcher Epoche gehört der Generalbass (Basslinie mit Akkorden darüber)?",
+      a: ["Barock", "Mittelalter", "Wiener Klassik", "Neue Musik"],
+      info: "Der Generalbass ist typisch für den Barock."
     },
     {
-      q: "Who composed \"The Four Seasons\"?",
+      q: { en: "Who wrote „The Four Seasons“?", de: "Wer hat „Die vier Jahreszeiten“ geschrieben?" },
       a: ["Antonio Vivaldi", "Ludwig van Beethoven", "Frédéric Chopin", "Arnold Schönberg"],
-      en: "Vivaldi wrote The Four Seasons, four violin concertos, around 1720.",
-      de: "\"Die vier Jahreszeiten\" sind Violinkonzerte von Vivaldi."
+      info: "„Die vier Jahreszeiten“ sind vier Violinkonzerte von Vivaldi."
     },
     {
-      q: "Which three composers belong to the Viennese Classical era?",
-      a: ["Haydn, Mozart, Beethoven", "Bach, Händel, Vivaldi", "Chopin, Wagner, Schubert", "Debussy, Schönberg, Stravinsky"],
-      en: "Haydn, Mozart and Beethoven all worked in Vienna.",
-      de: "Haydn, Mozart und Beethoven sind die drei Wiener Klassiker."
+      q: "Welche drei Komponisten gehören zur Wiener Klassik?",
+      a: ["Haydn, Mozart, Beethoven", "Bach, Händel, Vivaldi", "Chopin, Wagner, Schubert", "Debussy, Schönberg, Strawinsky"],
+      info: "Haydn, Mozart und Beethoven haben alle in Wien gearbeitet."
     },
     {
-      q: "Which instrument replaced the harpsichord in the Classical era?",
-      a: ["Fortepiano", "Organ", "Lute", "Electric guitar"],
-      en: "The fortepiano can play loud and soft, the harpsichord cannot.",
-      de: "Das Hammerklavier kann laut und leise spielen, das Cembalo nicht."
+      q: "Welches Instrument hat in der Wiener Klassik das Cembalo ersetzt?",
+      a: ["Das Hammerklavier", "Die Orgel", "Die Laute", "Die E-Gitarre"],
+      info: "Das Hammerklavier kann laut und leise spielen, das Cembalo nicht."
     },
     {
-      q: "A leitmotif is a short melody for a character. Which composer made it famous?",
+      q: "Ein Leitmotiv ist eine kurze Melodie für eine Person. Welcher Komponist hat es berühmt gemacht?",
       a: ["Richard Wagner", "Josquin des Prez", "Joseph Haydn", "Steve Reich"],
-      en: "Wagner used leitmotifs in his Romantic operas.",
-      de: "Wagner machte das Leitmotiv in seinen Opern berühmt."
+      info: "Wagner hat in seinen Opern viele Leitmotive verwendet."
     },
     {
-      q: "Who invented the twelve-tone technique?",
+      q: "Wer hat die Zwölftontechnik erfunden?",
       a: ["Arnold Schönberg", "Claude Debussy", "Giovanni P. da Palestrina", "Franz Schubert"],
-      en: "Schönberg used all 12 notes in a fixed order, so no note is the \"home\" note.",
-      de: "Schönberg entwickelte die Zwölftontechnik."
+      info: "Bei Schönbergs Zwölftontechnik kommen alle 12 Töne in einer festen Reihe vor. Kein Ton ist der Grundton."
     },
     {
-      q: "What happens in John Cage's piece 4′33″ (1952)?",
-      a: ["The musician plays no notes for 4 minutes 33 seconds", "A choir sings in Latin", "An orchestra plays very loud", "A computer plays a melody"],
-      en: "The music is the silence and the sounds of the room.",
-      de: "Die Musik ist die Stille und die Geräusche im Raum."
+      q: "Was passiert im Stück „4′33″“ von John Cage (1952)?",
+      a: ["Der Musiker spielt 4 Minuten und 33 Sekunden lang keinen Ton", "Ein Chor singt auf Latein", "Ein Orchester spielt sehr laut", "Ein Computer spielt eine Melodie"],
+      info: "Die Musik sind die Stille und die Geräusche im Raum."
     }
   ];
 
@@ -208,10 +196,21 @@
 
   function renderQuestion() {
     const item = QUESTIONS[index];
-    $("qnum").textContent = "Question " + (index + 1) + " / " + QUESTIONS.length;
-    $("points").textContent = score + " pts";
+    $("qnum").textContent = "Frage " + (index + 1) + " / " + QUESTIONS.length;
+    $("points").textContent = score + " Punkte";
     $("bar").style.width = (index / QUESTIONS.length * 100) + "%";
-    $("question").textContent = item.q;
+
+    const q = $("question");
+    if (typeof item.q === "string") {
+      q.textContent = item.q;
+    } else {
+      q.textContent = item.q.en;
+      const tr = document.createElement("span");
+      tr.className = "tr";
+      tr.textContent = item.q.de;
+      q.appendChild(tr);
+    }
+
     $("feedback").hidden = true;
     $("next").hidden = true;
 
@@ -236,13 +235,12 @@
     });
     const fb = $("feedback");
     fb.className = "feedback " + (isCorrect ? "ok" : "bad");
-    $("verdict").textContent = isCorrect ? "✓ Correct! · Richtig!" : "✗ Not quite · Leider falsch";
-    $("explain").textContent = item.en;
-    $("explain-de").textContent = item.de;
+    $("verdict").textContent = isCorrect ? "✓ Richtig!" : "✗ Leider falsch";
+    $("explain").textContent = item.info;
     fb.hidden = false;
-    $("points").textContent = score + " pts";
+    $("points").textContent = score + " Punkte";
     const next = $("next");
-    next.textContent = index === QUESTIONS.length - 1 ? "Finish →" : "Next →";
+    next.textContent = index === QUESTIONS.length - 1 ? "Fertig →" : "Weiter →";
     next.hidden = false;
     next.focus();
   }
@@ -255,14 +253,14 @@
 
   async function finish() {
     show("end");
-    $("end-name").textContent = "Well done, " + playerName + "!";
+    $("end-name").textContent = "Gut gemacht, " + playerName + "!";
     $("final").textContent = score + " / " + QUESTIONS.length;
     const msg = $("save-msg");
-    msg.textContent = "Saving your score … · Punkte werden gespeichert …";
+    msg.textContent = "Punkte werden gespeichert …";
     const result = await window.DB.saveScore(playerName, score);
-    if (result === "saved") msg.textContent = "Your score is on the leaderboard. · Deine Punkte sind in der Rangliste.";
-    else if (result === "kept") msg.textContent = "You already had the same or a better score, so it stays on the leaderboard. · Dein besseres Ergebnis bleibt stehen.";
-    else msg.textContent = "Could not save your score (no connection). Just tell your score out loud! · Speichern ging nicht, sag deine Punkte einfach laut.";
+    if (result === "saved") msg.textContent = "Deine Punkte sind jetzt in der Rangliste.";
+    else if (result === "kept") msg.textContent = "Du hattest schon gleich viele oder mehr Punkte. Dein bestes Ergebnis bleibt in der Rangliste.";
+    else msg.textContent = "Speichern hat nicht geklappt (keine Verbindung). Sag deine Punkte einfach laut!";
   }
 
   $("again").addEventListener("click", () => {

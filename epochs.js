@@ -1,200 +1,202 @@
-// Content for the 7 eras. Every point: [English, Deutsch].
-// Listening: "url" is empty, so the page opens a YouTube search for "query".
-// To use a fixed video instead, paste its link into "url".
+// Inhalte der 7 Epochen.
+// Deutscher Punkt:   ["Haupttext", "kleine Notiz"]
+// Englischer Punkt:  { en: "Easy English", de: "Übersetzung" }  (ca. ein Viertel)
+// Hörbeispiel: "url" ist leer, dann öffnet sich eine YouTube-Suche nach "query".
+// Für ein festes Video den Link bei "url" einfügen.
 window.EPOCHS = [
   {
     id: "medieval",
-    name: "Middle Ages",
-    de: "Mittelalter",
-    years: "c. 500 – 1400",
-    era: ["From the end of Rome to the 1400s, music lives in the church", "Musik entsteht vor allem in Kirche und Kloster"],
+    name: "Mittelalter",
+    en: "Middle Ages",
+    years: "ca. 500 – 1400",
+    era: { en: "Music is in the church.", de: "Musik gibt es vor allem in Kirche und Kloster." },
     artists: [
       ["Hildegard von Bingen (1098–1179)", "Äbtissin und Komponistin"],
-      ["Pérotin (c. 1200)", "Notre-Dame-Schule, Paris"],
-      ["Guillaume de Machaut (c. 1300–1377)", "Dichter und Komponist"]
+      ["Pérotin (um 1200)", "Notre-Dame in Paris"],
+      ["Guillaume de Machaut (ca. 1300–1377)", "Dichter und Komponist"]
     ],
     characteristics: [
-      ["Gregorian chant: one melody, Latin text", "Gregorianischer Choral, einstimmig"],
-      ["Church modes instead of major/minor", "Kirchentonarten"],
-      ["Later: first music for several voices", "erste Mehrstimmigkeit"]
+      { en: "One melody.", de: "Eine Melodie, alle singen dasselbe." },
+      ["Gregorianischer Choral", "Kirchengesang auf Latein"],
+      ["Später: erste Mehrstimmigkeit", "mehrere Stimmen gleichzeitig"]
     ],
     innovations: [
-      ["Guido of Arezzo puts notes on a staff (11th c.)", "Notenlinien"],
-      ["Syllables ut – re – mi to learn songs", "Solmisation"],
-      ["Organum: chant for 2 or more voices", "Organum"]
+      ["Notenlinien (11. Jh.)", "erfunden von Guido von Arezzo"],
+      ["Silben ut – re – mi", "zum Lernen von Liedern"],
+      ["Organum", "Choral mit 2 oder mehr Stimmen"]
     ],
     instruments: [
-      ["Voice: the most important instrument", "Gesang"],
-      ["Vielle, hurdy-gurdy", "Fiedel, Drehleier"],
-      ["Shawm, psaltery, organ", "Schalmei, Psalterium, Orgel"]
+      { en: "Voice", de: "Stimme, das wichtigste Instrument" },
+      { en: "Organ", de: "Orgel" },
+      ["Fiedel, Drehleier, Schalmei", ""]
     ],
     listening: { title: "Hildegard von Bingen – O virtus Sapientiae", query: "Hildegard von Bingen O virtus Sapientiae", url: "" }
   },
   {
     id: "renaissance",
     name: "Renaissance",
-    de: "Renaissance",
-    years: "c. 1400 – 1600",
-    era: ["\"Rebirth\": new interest in people and art", "Wiedergeburt der Antike, der Mensch im Mittelpunkt"],
+    en: "Renaissance",
+    years: "ca. 1400 – 1600",
+    era: { en: "A new start for art.", de: "Ein Neuanfang für die Kunst („Wiedergeburt“)." },
     artists: [
-      ["Josquin des Prez (c. 1450–1521)", "Messen und Motetten"],
-      ["Thomas Tallis (c. 1505–1585)", "Kirchenmusik in England"],
-      ["Giovanni P. da Palestrina (c. 1525–1594)", "Meister der Kirchenmusik"]
+      ["Josquin des Prez (ca. 1450–1521)", "Messen und Motetten"],
+      ["Thomas Tallis (ca. 1505–1585)", "Kirchenmusik in England"],
+      ["Giovanni P. da Palestrina (ca. 1525–1594)", "Meister der Kirchenmusik"]
     ],
     characteristics: [
-      ["Polyphony: many equal voices", "Polyphonie, gleichwertige Stimmen"],
-      ["Mostly sung, often a cappella", "meist Vokalmusik, ohne Instrumente"],
-      ["Clear text, word painting", "Text gut verständlich, Wortmalerei"]
+      ["Polyphonie", "viele gleich wichtige Stimmen"],
+      { en: "Many voices sing.", de: "Viele Stimmen singen, oft ohne Instrumente." },
+      ["Text gut verständlich", "die Musik malt die Wörter nach"]
     ],
     innovations: [
-      ["Music printing: Petrucci, Venice, 1501", "Notendruck"],
-      ["Madrigal: secular song", "weltliches Lied"],
-      ["Instrument families play together", "Instrumentenfamilien (Consort)"]
+      ["Notendruck (1501)", "Petrucci in Venedig"],
+      ["Madrigal", "weltliches Lied, nicht für die Kirche"],
+      ["Instrumentenfamilien", "große und kleine Instrumente spielen zusammen"]
     ],
     instruments: [
-      ["Lute", "Laute"],
-      ["Viola da gamba, recorder", "Gambe, Blockflöte"],
-      ["Harpsichord, organ", "Cembalo, Orgel"]
+      ["Laute", "das beliebteste Instrument"],
+      { en: "Recorder", de: "Blockflöte" },
+      ["Gambe, Cembalo, Orgel", ""]
     ],
     listening: { title: "Palestrina – Missa Papae Marcelli: Kyrie", query: "Palestrina Missa Papae Marcelli Kyrie", url: "" }
   },
   {
     id: "baroque",
-    name: "Baroque",
-    de: "Barock",
-    years: "c. 1600 – 1750",
-    era: ["Ends with the death of J. S. Bach in 1750", "endet mit Bachs Tod 1750"],
+    name: "Barock",
+    en: "Baroque",
+    years: "ca. 1600 – 1750",
+    era: { en: "It ends in 1750.", de: "Endet 1750 mit dem Tod von Bach." },
     artists: [
       ["Claudio Monteverdi (1567–1643)", "frühe Opern"],
       ["Antonio Vivaldi (1678–1741)", "Violinkonzerte"],
       ["J. S. Bach (1685–1750), G. F. Händel (1685–1759)", "Höhepunkt des Barock"]
     ],
     characteristics: [
-      ["Basso continuo: bass line + chords", "Generalbass"],
-      ["Major and minor keys", "Dur und Moll"],
-      ["Loud/soft contrast, many ornaments", "Terrassendynamik, Verzierungen"]
+      ["Generalbass", "eine Basslinie mit Akkorden darüber"],
+      ["Dur und Moll", "statt Kirchentonarten"],
+      { en: "Loud – soft – loud.", de: "Laut und leise wechseln sich ab." }
     ],
     innovations: [
-      ["Opera (Monteverdi: L'Orfeo, 1607)", "Oper"],
-      ["Concerto: soloist vs. orchestra", "Solokonzert"],
-      ["Oratorio and fugue", "Oratorium, Fuge"]
+      ["Oper", "Monteverdi: L'Orfeo (1607)"],
+      ["Solokonzert", "ein Solist und das Orchester"],
+      ["Oratorium und Fuge", ""]
     ],
     instruments: [
-      ["Harpsichord, organ", "Cembalo, Orgel"],
-      ["Violin family", "Streicher: Geige, Bratsche, Cello"],
-      ["Natural trumpet, oboe, recorder", "Naturtrompete, Oboe, Blockflöte"]
+      { en: "Violin", de: "Geige" },
+      ["Cembalo und Orgel", ""],
+      { en: "Trumpet", de: "Trompete, noch ohne Ventile" }
     ],
-    listening: { title: "Vivaldi – The Four Seasons: Spring (1st mvt.)", query: "Vivaldi Four Seasons Spring 1st movement", url: "" }
+    listening: { title: "Vivaldi – Die vier Jahreszeiten: Frühling (1. Satz)", query: "Vivaldi Four Seasons Spring 1st movement", url: "" }
   },
   {
     id: "classical",
-    name: "Classical",
-    de: "Wiener Klassik",
-    years: "c. 1750 – 1820",
-    era: ["Haydn, Mozart and Beethoven all work in Vienna", "alle drei wirken in Wien"],
+    name: "Wiener Klassik",
+    en: "Classical",
+    years: "ca. 1750 – 1820",
+    era: { en: "Music in Vienna.", de: "Haydn, Mozart und Beethoven arbeiten alle in Wien." },
     artists: [
-      ["Joseph Haydn (1732–1809)", "\"Vater\" von Sinfonie und Streichquartett"],
+      ["Joseph Haydn (1732–1809)", "„Vater“ der Sinfonie"],
       ["Wolfgang A. Mozart (1756–1791)", "Opern, Sinfonien, Konzerte"],
       ["Ludwig van Beethoven (1770–1827)", "Brücke zur Romantik"]
     ],
     characteristics: [
-      ["Clear, balanced phrases", "klare, ausgewogene Phrasen"],
-      ["Melody with accompaniment", "Melodie mit Begleitung"],
-      ["Strong contrasts inside one piece", "Kontraste innerhalb eines Stücks"]
+      ["Klar und ausgewogen", "Melodien kann man sich leicht merken"],
+      ["Melodie mit Begleitung", "eine Stimme führt, die anderen begleiten"],
+      { en: "Easy to sing.", de: "Gut zum Mitsingen." }
     ],
     innovations: [
-      ["Sonata form", "Sonatenhauptsatzform"],
-      ["Symphony and string quartet", "Sinfonie, Streichquartett"],
-      ["Public concerts", "öffentliche Konzerte"]
+      ["Sonatenhauptsatzform", "ein fester Bauplan für ein Musikstück"],
+      ["Sinfonie und Streichquartett", ""],
+      ["Öffentliche Konzerte", "Musik für alle, nicht nur für Adelige"]
     ],
     instruments: [
-      ["Fortepiano replaces the harpsichord", "Hammerklavier statt Cembalo"],
-      ["Clarinet joins the orchestra", "Klarinette"],
-      ["Classical orchestra: strings, winds, timpani", "klassisches Orchester"]
+      { en: "Piano", de: "Klavier (Hammerklavier) statt Cembalo" },
+      { en: "Clarinet", de: "Klarinette, neu im Orchester" },
+      ["Klassisches Orchester", "Streicher, Bläser, Pauken"]
     ],
-    listening: { title: "Mozart – Eine kleine Nachtmusik (1st mvt.)", query: "Mozart Eine kleine Nachtmusik 1st movement", url: "" }
+    listening: { title: "Mozart – Eine kleine Nachtmusik (1. Satz)", query: "Mozart Eine kleine Nachtmusik 1st movement", url: "" }
   },
   {
     id: "romantic",
-    name: "Romantic",
-    de: "Romantik",
-    years: "c. 1820 – 1900",
-    era: ["Feelings, nature and dreams become the main topic", "Gefühl, Natur und Traum im Mittelpunkt"],
+    name: "Romantik",
+    en: "Romantic",
+    years: "ca. 1820 – 1900",
+    era: { en: "Music about feelings.", de: "Musik über Gefühle, Natur und Träume." },
     artists: [
       ["Franz Schubert (1797–1828)", "über 600 Lieder"],
       ["Frédéric Chopin (1810–1849)", "Klaviermusik"],
-      ["Richard Wagner (1813–1883), P. Tchaikovsky (1840–1893)", "Oper, Ballett"]
+      ["Richard Wagner (1813–1883), Peter Tschaikowsky (1840–1893)", "Opern, Ballett"]
     ],
     characteristics: [
-      ["Strong emotions, stories from books and nature", "starke Gefühle, Literatur, Natur"],
-      ["Big orchestra, rich chromatic harmony", "großes Orchester, Chromatik"],
-      ["Virtuosos and national styles", "Virtuosen, Nationalstile"]
+      { en: "Big feelings.", de: "Starke Gefühle." },
+      ["Großes Orchester", "viele neue Klangfarben"],
+      ["Virtuosen", "Stars, die extrem schwierige Stücke spielen"]
     ],
     innovations: [
-      ["Art song (Lied)", "Kunstlied"],
-      ["Symphonic poem: orchestra tells a story", "Sinfonische Dichtung"],
-      ["Leitmotif: a melody for a character (Wagner)", "Leitmotiv"]
+      ["Kunstlied", "Gedicht + Gesang + Klavier"],
+      ["Sinfonische Dichtung", "das Orchester erzählt eine Geschichte"],
+      ["Leitmotiv", "eine Melodie für eine Person (Wagner)"]
     ],
     instruments: [
-      ["Modern piano: bigger and louder", "moderner Flügel"],
-      ["Valves for horn and trumpet (from 1814)", "Ventile für Blechbläser"],
-      ["Tuba, larger orchestra", "Tuba, großes Orchester"]
+      { en: "Big piano", de: "moderner Flügel, größer und lauter" },
+      ["Ventile für Horn und Trompete", "ab 1814"],
+      { en: "Tuba", de: "Tuba, ein sehr tiefes Blechblasinstrument" }
     ],
-    listening: { title: "Chopin – Nocturne Op. 9 No. 2", query: "Chopin Nocturne Op. 9 No. 2", url: "" }
+    listening: { title: "Chopin – Nocturne op. 9 Nr. 2", query: "Chopin Nocturne Op. 9 No. 2", url: "" }
   },
   {
     id: "modern",
-    name: "Modern",
-    de: "Moderne",
-    years: "c. 1900 – 1945",
-    era: ["Composers break the old rules of harmony", "alte Regeln der Harmonie werden gebrochen"],
+    name: "Moderne",
+    en: "Modern",
+    years: "ca. 1900 – 1945",
+    era: { en: "New rules.", de: "Die alten Regeln der Harmonie werden gebrochen." },
     artists: [
       ["Claude Debussy (1862–1918)", "Impressionismus"],
-      ["Arnold Schönberg (1874–1951)", "Atonalität, Zwölftonmusik"],
-      ["Igor Stravinsky (1882–1971)", "Le Sacre du printemps"]
+      ["Arnold Schönberg (1874–1951)", "Zwölftonmusik"],
+      ["Igor Strawinsky (1882–1971)", "„Le Sacre du printemps“"]
     ],
     characteristics: [
-      ["Impressionism: sound colours, whole-tone scale", "Klangfarben, Ganztonleiter"],
-      ["Atonality: no home key", "Atonalität, kein Grundton"],
-      ["Dissonance and complex rhythms", "Dissonanzen, komplexe Rhythmen"]
+      ["Impressionismus", "Musik malt Stimmungen, wie ein Bild"],
+      ["Atonalität", "kein Grundton, kein „Zuhause“"],
+      { en: "Strange sounds.", de: "Schräge Klänge (Dissonanzen)." }
     ],
     innovations: [
-      ["Twelve-tone technique (Schönberg)", "Zwölftontechnik"],
-      ["Polytonality: several keys at once", "Polytonalität"],
-      ["The Rite of Spring causes a riot (Paris, 1913)", "Skandal bei der Uraufführung"]
+      ["Zwölftontechnik", "alle 12 Töne in fester Reihe (Schönberg)"],
+      ["Polytonalität", "mehrere Tonarten gleichzeitig"],
+      ["Skandal in Paris (1913)", "bei „Le Sacre du printemps“"]
     ],
     instruments: [
-      ["Bigger percussion section", "mehr Schlagwerk"],
-      ["Celesta, harp, saxophone for new colours", "Celesta, Harfe, Saxofon"],
-      ["Influence of jazz", "Einfluss des Jazz"]
+      { en: "Drums", de: "mehr Schlagzeug" },
+      ["Celesta, Harfe, Saxofon", "neue Klangfarben"],
+      ["Einfluss vom Jazz", ""]
     ],
     listening: { title: "Debussy – Clair de lune", query: "Debussy Clair de lune", url: "" }
   },
   {
     id: "new",
-    name: "New Music",
-    de: "Neue Musik",
-    years: "1945 – today",
-    era: ["After World War II: everything is possible", "nach dem Zweiten Weltkrieg: alles ist möglich"],
+    name: "Neue Musik",
+    en: "New Music",
+    years: "1945 – heute",
+    era: { en: "Everything is possible.", de: "Nach dem Zweiten Weltkrieg ist alles erlaubt." },
     artists: [
       ["John Cage (1912–1992)", "Zufallsmusik"],
       ["Karlheinz Stockhausen (1928–2007)", "elektronische Musik"],
-      ["György Ligeti (1923–2006), Steve Reich (b. 1936)", "Klangflächen, Minimal Music"]
+      ["György Ligeti (1923–2006), Steve Reich (geb. 1936)", "Klangflächen, Minimal Music"]
     ],
     characteristics: [
-      ["Any sound can be music", "jedes Geräusch kann Musik sein"],
-      ["Chance and strict rules (serialism)", "Zufall und Serialismus"],
-      ["Minimal music: short patterns repeat", "Minimal Music, Wiederholung"]
+      { en: "Every sound is music.", de: "Jedes Geräusch kann Musik sein." },
+      ["Zufall und strenge Regeln", "Aleatorik und Serialismus"],
+      ["Minimal Music", "kurze Muster wiederholen sich"]
     ],
     innovations: [
-      ["Musique concrète: recorded noises (Schaeffer, 1948)", "Musik aus Geräuschen"],
-      ["Electronic studio in Cologne (1951)", "elektronisches Studio Köln"],
-      ["4′33″ by Cage (1952): no notes are played", "ein Stück aus Stille"]
+      ["Musique concrète (1948)", "Musik aus aufgenommenen Geräuschen"],
+      ["Elektronisches Studio in Köln (1951)", ""],
+      ["4′33″ von Cage (1952)", "ein Stück ohne einen einzigen Ton"]
     ],
     instruments: [
-      ["Synthesizer and computer", "Synthesizer, Computer"],
-      ["Tape recorder and microphone", "Tonband, Mikrofon"],
-      ["Prepared piano: objects between the strings", "präpariertes Klavier"]
+      { en: "Computer", de: "Computer und Synthesizer" },
+      ["Tonband und Mikrofon", ""],
+      ["Präpariertes Klavier", "Gegenstände zwischen den Saiten"]
     ],
     listening: { title: "Steve Reich – Clapping Music (1972)", query: "Steve Reich Clapping Music", url: "" }
   }
