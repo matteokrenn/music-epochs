@@ -31,7 +31,6 @@
   .bar > div { height: 100%; width: 0; background: var(--gold); transition: width 0.3s; }
 
   .question { font-size: 1.3em; line-height: 1.35; margin-bottom: 1em; }
-  .question .tr { display: block; font-size: 0.7em; color: var(--muted); font-style: italic; margin-top: 0.3em; }
   .answers { display: grid; gap: 0.6em; }
   .answers button {
     border-radius: 0.5em;
@@ -100,11 +99,10 @@
 <script src="config.js"></script>
 <script src="db.js"></script>
 <script>
-  // Jede Frage: q (Deutsch) oder { en, de } (einfaches Englisch mit Übersetzung),
-  // a = Antworten (die erste ist richtig, die Reihenfolge wird gemischt), info = Erklärung.
+  // Jede Frage: q = Frage, a = Antworten (die erste ist richtig, die Reihenfolge wird gemischt), info = Erklärung.
   const QUESTIONS = [
     {
-      q: { en: "Which era is first?", de: "Welche Epoche kommt zuerst?" },
+      q: "Welche Epoche kommt zuerst?",
       a: ["Mittelalter", "Renaissance", "Barock", "Romantik"],
       info: "Das Mittelalter (ca. 500–1400) ist die älteste Epoche. Danach kommen Renaissance, Barock, Wiener Klassik, Romantik, Moderne und Neue Musik."
     },
@@ -124,7 +122,7 @@
       info: "Ottaviano Petrucci druckte 1501 in Venedig das erste große Notenbuch. Vorher musste man Noten mit der Hand abschreiben."
     },
     {
-      q: { en: "Which instrument is from the Renaissance?", de: "Welches Instrument gehört zur Renaissance?" },
+      q: "Welches Instrument gehört zur Renaissance?",
       a: ["Laute", "Saxofon", "Synthesizer", "Tuba"],
       info: "Die Laute war das beliebteste Instrument der Renaissance."
     },
@@ -134,7 +132,7 @@
       info: "Der Generalbass ist typisch für den Barock."
     },
     {
-      q: { en: "Who wrote „The Four Seasons“?", de: "Wer hat „Die vier Jahreszeiten“ geschrieben?" },
+      q: "Wer hat „Die vier Jahreszeiten“ geschrieben?",
       a: ["Antonio Vivaldi", "Ludwig van Beethoven", "Frédéric Chopin", "Arnold Schönberg"],
       info: "„Die vier Jahreszeiten“ sind vier Violinkonzerte von Vivaldi."
     },
@@ -200,16 +198,7 @@
     $("points").textContent = score + " Punkte";
     $("bar").style.width = (index / QUESTIONS.length * 100) + "%";
 
-    const q = $("question");
-    if (typeof item.q === "string") {
-      q.textContent = item.q;
-    } else {
-      q.textContent = item.q.en;
-      const tr = document.createElement("span");
-      tr.className = "tr";
-      tr.textContent = item.q.de;
-      q.appendChild(tr);
-    }
+    $("question").textContent = item.q;
 
     $("feedback").hidden = true;
     $("next").hidden = true;

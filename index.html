@@ -102,16 +102,13 @@
     letter-spacing: 0.12em;
     margin-bottom: 0.45em;
   }
-  .card h3 .de { text-transform: none; letter-spacing: 0; font-size: 0.82em; margin-left: 0.35em; }
   .card ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.42em; }
   .card li { line-height: 1.22; padding-left: 0.9em; position: relative; }
   .card li::before { content: "◆"; color: var(--gold-soft); position: absolute; left: 0; font-size: 0.55em; top: 0.55em; }
   .card li .main { display: block; }
   .note { display: block; font-size: 0.8em; color: var(--muted); }
-  .note.tr { font-style: italic; }
   .era-years { font-size: 2.1em; color: var(--text); line-height: 1.1; margin: 0.05em 0 0.3em; }
   .era-text { line-height: 1.3; }
-  .era-text .note { font-size: 0.85em; margin-top: 0.25em; }
   .listen-title { line-height: 1.3; margin-bottom: 0.7em; }
   .listen-card .btn { align-self: flex-start; font-size: 0.9em; }
 
@@ -202,21 +199,20 @@
       return node;
     }
 
-    // Deutsch: ["Text", "Notiz"]  ·  Englisch: { en, de } mit kleiner Übersetzung
-    function point(p) {
-      if (Array.isArray(p)) {
-        return el("li", null, null, [el("span", "main", p[0]), p[1] ? el("span", "note", p[1]) : null]);
-      }
-      return el("li", "is-en", null, [el("span", "main", p.en), el("span", "note tr", p.de)]);
+    // Jahreszahlen wie "1685–1759" und "1. Satz" nicht mitten im Wort umbrechen
+    function noBreak(text) {
+      return text.replace(/(\d)–(\d)/g, "$1\u2060–\u2060$2").replace(/(\d\.) /g, "$1\u00a0");
     }
 
+    // Punkt: ["Text", "kleine Notiz"]
     function pointList(points) {
-      return el("ul", null, null, points.map(point));
+      return el("ul", null, null, points.map(([main, note]) =>
+        el("li", null, null, [el("span", "main", noBreak(main)), note ? el("span", "note", note) : null])
+      ));
     }
 
-    function card(title, titleEn, body, extraClass) {
-      const h = el("h3", null, title, [el("span", "de", titleEn)]);
-      return el("div", "card" + (extraClass ? " " + extraClass : ""), null, [h].concat(body));
+    function card(title, body, extraClass) {
+      return el("div", "card" + (extraClass ? " " + extraClass : ""), null, [el("h3", null, title)].concat(body));
     }
 
     function listenUrl(l) {
@@ -233,13 +229,12 @@
     slides.push(el("section", "slide title-slide", null, [
       el("div", "ornament", "◆ ◆ ◆"),
       el("h1", null, "Die Epochen der Musik"),
-      el("div", "de", "Musical Eras"),
       el("p", "sub", "Vom Gregorianischen Choral bis zur elektronischen Musik: 7 Epochen der Reihe nach."),
       el("p", "by", "Matteo · Musik · November 2026")
     ]));
 
     EPOCHS.forEach((e, i) => {
-      const link = el("a", "btn", "▶ Auf YouTube anhören");
+      const link = el("a", "btn", "▶ Jetzt anhören");
       link.href = listenUrl(e.listening);
       link.target = "_blank";
       link.rel = "noopener";
@@ -247,19 +242,18 @@
       slides.push(el("section", "slide epoch", null, [
         el("div", "epoch-head", null, [
           el("span", "num", (i + 1) + " / " + EPOCHS.length),
-          el("h2", null, e.name),
-          el("span", "de", e.en)
+          el("h2", null, e.name)
         ]),
         el("div", "grid", null, [
-          card("Zeitraum", "Era", [
+          card("Zeitraum", [
             el("div", "era-years", e.years),
-            el("div", "era-text", e.era.en, [el("span", "note tr", e.era.de)])
+            el("div", "era-text", e.era)
           ]),
-          card("Komponisten", "Artists", [pointList(e.artists)]),
-          card("Merkmale", "Characteristics", [pointList(e.characteristics)]),
-          card("Neuerungen", "Innovations", [pointList(e.innovations)]),
-          card("Instrumente", "Instruments", [pointList(e.instruments)]),
-          card("Hörbeispiel", "Listening", [el("div", "listen-title", e.listening.title), link], "listen-card")
+          card("Komponisten", [pointList(e.artists)]),
+          card("Merkmale", [pointList(e.characteristics)]),
+          card("Neuerungen", [pointList(e.innovations)]),
+          card("Instrumente", [pointList(e.instruments)]),
+          card("Hörbeispiel", [el("div", "listen-title", noBreak(e.listening.title)), link], "listen-card")
         ])
       ]));
     });
@@ -272,7 +266,6 @@
     slides.push(el("section", "slide board-slide", null, [
       el("div", "ornament", "◆ ◆ ◆"),
       el("h2", null, "Rangliste"),
-      el("div", "de", "Leaderboard"),
       el("p", "join", "Spiel mit beim Quiz:", [el("br"), qLink]),
       board,
       boardMsg
@@ -287,7 +280,7 @@
         el("span", "tl-name", e.name),
         el("span", "tl-years", e.years)
       ]);
-      b.title = e.name + " / " + e.en;
+      b.title = e.name + " (" + e.years + ")";
       b.addEventListener("click", () => go(i + 1));
       timeline.appendChild(b);
       return b;

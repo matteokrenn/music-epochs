@@ -1,15 +1,15 @@
-# Musical Eras · Musikepochen
+# Die Epochen der Musik
 
-Schulprojekt Musik: die 7 Epochen der europäischen Musikgeschichte in der richtigen Reihenfolge, plus ein Live-Quiz für die Klasse. Hauptsprache Deutsch, etwa ein Viertel einfaches Englisch mit Übersetzung.
+Schulprojekt Musik: die 7 Epochen der europäischen Musikgeschichte in der richtigen Reihenfolge, dazu ein Live-Quiz für die Klasse.
 
-- `index.html`: presentation, one slide per era, timeline on top, live leaderboard at the end
-- `quiz.html`: quiz for classmates (12 questions)
-- `epochs.js`: all content of the 7 eras
-- `config.js`: Firebase config (**still placeholders**)
-- `db.js`: database connection, with fallback if Firebase is not reachable
-- `style.css`: shared design
+- `index.html`: Präsentation, eine Folie pro Epoche, Zeitleiste oben, Live-Rangliste am Ende
+- `quiz.html`: Quiz für die Mitschüler (12 Fragen)
+- `epochs.js`: alle Inhalte der 7 Epochen
+- `config.js`: Firebase-Einstellungen (**noch Platzhalter**)
+- `db.js`: Verbindung zur Datenbank, mit Ersatzlösung, falls Firebase nicht erreichbar ist
+- `style.css`: gemeinsames Aussehen
 
-No build step, no framework. Runs directly on GitHub Pages.
+Kein Build-Schritt, kein Framework. Läuft direkt auf GitHub Pages.
 
 ## Bedienung
 
@@ -39,7 +39,7 @@ No build step, no framework. Runs directly on GitHub Pages.
 }
 ```
 
-Die Firebase-Config darf öffentlich im Repo stehen, sie ist kein Passwort. Den Schutz übernehmen die Regeln.
+Die Firebase-Einstellungen dürfen öffentlich im Repo stehen, sie sind kein Passwort. Den Schutz übernehmen die Regeln.
 
 ## Testen
 
