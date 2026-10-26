@@ -1,0 +1,60 @@
+/* Shared look: dark, elegant, serif. System fonts only (no internet needed). */
+:root {
+  --bg: #0e0c0a;
+  --bg-2: #171310;
+  --card: #1c1814;
+  --line: #3b3229;
+  --text: #f1e9da;
+  --muted: #b3a58d;
+  --gold: #d2ad62;
+  --gold-soft: #8c7442;
+  --ok: #8fc79a;
+  --bad: #e08a7c;
+  --serif: "Palatino Linotype", "Book Antiqua", Palatino, "Iowan Old Style", Georgia, serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--serif);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background: radial-gradient(ellipse at top, #1d1813 0%, var(--bg) 60%) fixed, var(--bg);
+}
+
+a { color: var(--gold); }
+
+h1, h2, h3 { font-weight: normal; letter-spacing: 0.01em; margin: 0; }
+
+.de { color: var(--muted); font-style: italic; }
+
+button, .btn {
+  font-family: inherit;
+  font-size: 1em;
+  color: var(--text);
+  background: transparent;
+  border: 1px solid var(--gold-soft);
+  border-radius: 999px;
+  padding: 0.5em 1.3em;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: background 0.15s, border-color 0.15s;
+}
+button:hover, .btn:hover { background: #2a2219; border-color: var(--gold); }
+button:disabled { opacity: 0.35; cursor: default; background: transparent; }
+button:focus-visible, .btn:focus-visible, input:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+.btn-primary { background: var(--gold); color: #1a140c; border-color: var(--gold); }
+.btn-primary:hover { background: #e2c07a; }
+
+.ornament {
+  color: var(--gold);
+  letter-spacing: 0.6em;
+  font-size: 0.9em;
+}

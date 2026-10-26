@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Musical Eras</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  html, body { height: 100%; overflow: hidden; }
+  body {
+    font-size: clamp(14px, 1.15vw + 0.45vh, 30px);
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+  }
+
+  /* Timeline */
+  .timeline {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.4em;
+    padding: 0.9em 2.2em 0.5em;
+    position: relative;
+  }
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 2.2em; right: 2.2em;
+    top: 1.55em;
+    border-top: 1px solid var(--line);
+  }
+  .tl-item {
+    background: none;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.68em;
+    line-height: 1.25;
+    position: relative;
+  }
+  .tl-item:hover { background: none; color: var(--text); }
+  .tl-dot {
+    display: block;
+    width: 0.85em; height: 0.85em;
+    margin: 0.55em auto 0.45em;
+    border-radius: 50%;
+    border: 1px solid var(--gold-soft);
+    background: var(--bg);
+  }
+  .tl-item.past .tl-dot { background: var(--gold-soft); }
+  .tl-item.active { color: var(--gold); }
+  .tl-item.active .tl-dot { background: var(--gold); border-color: var(--gold); box-shadow: 0 0 0 4px rgba(210, 173, 98, 0.2); }
+  .tl-years { display: block; opacity: 0.75; font-size: 0.9em; }
+
+  /* Slides */
+  #deck { position: relative; min-height: 0; }
+  .slide {
+    position: absolute; inset: 0;
+    padding: 0.6em 2.2em 0.4em;
+    display: none;
+    flex-direction: column;
+    min-height: 0;
+  }
+  .slide.active { display: flex; animation: fade 0.35s ease; }
+  @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+  /* Title slide */
+  .title-slide { justify-content: center; align-items: center; text-align: center; gap: 0.6em; }
+  .title-slide h1 { font-size: 4em; line-height: 1.05; }
+  .title-slide .de { font-size: 1.6em; }
+  .title-slide .sub { font-size: 1.05em; color: var(--muted); max-width: 34em; }
+  .title-slide .by { margin-top: 1.4em; color: var(--muted); font-size: 0.95em; letter-spacing: 0.05em; }
+
+  /* Epoch slide */
+  .epoch-head { display: flex; align-items: baseline; gap: 0.7em; flex-wrap: wrap; margin-bottom: 0.55em; }
+  .epoch-head .num { color: var(--gold); font-size: 0.85em; letter-spacing: 0.15em; }
+  .epoch-head h2 { font-size: 2.5em; line-height: 1; }
+  .epoch-head .de { font-size: 1.35em; }
+  .grid {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr 1fr;
+    gap: 0.75em;
+  }
+  .card {
+    background: linear-gradient(180deg, var(--card), var(--bg-2));
+    border: 1px solid var(--line);
+    border-radius: 0.5em;
+    padding: 0.7em 0.95em;
+    min-height: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .card h3 {
+    color: var(--gold);
+    font-size: 1.05em;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 0.45em;
+  }
+  .card h3 .de { text-transform: none; letter-spacing: 0; font-size: 0.82em; margin-left: 0.35em; }
+  .card ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.42em; }
+  .card li { line-height: 1.22; padding-left: 0.9em; position: relative; }
+  .card li::before { content: "◆"; color: var(--gold-soft); position: absolute; left: 0; font-size: 0.55em; top: 0.55em; }
+  .card li .en { display: block; }
+  .card li .de { display: block; font-size: 0.8em; }
+  .era-years { font-size: 2.1em; color: var(--text); line-height: 1.1; margin: 0.05em 0 0.3em; }
+  .era-text { line-height: 1.3; }
+  .era-text .de { display: block; font-size: 0.85em; margin-top: 0.25em; }
+  .listen-title { line-height: 1.3; margin-bottom: 0.7em; }
+  .listen-card .btn { align-self: flex-start; font-size: 0.9em; }
+
+  /* Leaderboard slide */
+  .board-slide { align-items: center; }
+  .board-slide h2 { font-size: 2.6em; margin-top: 0.2em; }
+  .board-slide .de { font-size: 1.2em; }
+  .join { margin: 0.6em 0 0.9em; color: var(--muted); text-align: center; }
+  .join a { font-size: 1.2em; word-break: break-all; }
+  .board { width: min(32em, 100%); list-style: none; margin: 0; padding: 0; counter-reset: rank; overflow: hidden; }
+  .board li {
+    counter-increment: rank;
+    display: grid;
+    grid-template-columns: 2.2em 1fr auto;
+    align-items: baseline;
+    padding: 0.38em 0.6em;
+    border-bottom: 1px solid var(--line);
+    font-size: 1.1em;
+  }
+  .board li::before { content: counter(rank) "."; color: var(--muted); }
+  .board li:nth-child(1) { color: var(--gold); font-size: 1.35em; }
+  .board li:nth-child(2), .board li:nth-child(3) { color: #e6cf9e; }
+  .board .pts { font-variant-numeric: tabular-nums; }
+  .board-msg { color: var(--muted); text-align: center; max-width: 30em; line-height: 1.4; }
+
+  /* Controls */
+  .controls {
+    display: flex; justify-content: center; align-items: center; gap: 1.2em;
+    padding: 0.4em 0 0.75em;
+    font-size: 0.85em;
+  }
+  #counter { color: var(--muted); min-width: 4.5em; text-align: center; font-variant-numeric: tabular-nums; }
+
+  /* Narrow screens (phone): stack the cards and allow scrolling */
+  @media (max-width: 760px) {
+    html, body { overflow: auto; height: auto; }
+    body { font-size: 15px; }
+    .slide { position: static; padding: 0.6em 1em; }
+    .grid { grid-template-columns: 1fr; grid-template-rows: none; }
+    .timeline { padding: 0.8em 1em 0.4em; }
+    .timeline::before { left: 1em; right: 1em; }
+    .tl-name, .tl-years { display: none; }
+    .title-slide h1 { font-size: 2.6em; }
+  }
+
+  /* PDF export: Ctrl+P -> "Save as PDF", landscape, no margins */
+  @media print {
+    @page { size: 297mm 167mm; margin: 0; }
+    html, body { height: auto; overflow: visible; background: var(--bg); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    body { display: block; font-size: 12.5pt; }
+    .timeline, .controls { display: none; }
+    #deck { position: static; }
+    .slide, .slide.active {
+      position: relative; display: flex; animation: none;
+      height: 167mm; padding: 9mm 12mm;
+      break-after: page; page-break-after: always;
+      background: var(--bg);
+    }
+    .slide:last-child { break-after: auto; page-break-after: auto; }
+    .print-hide { display: none !important; }
+    .listen-card .btn { border: none; padding: 0; color: var(--gold); }
+  }
+</style>
+</head>
+<body>
+  <header><nav class="timeline" id="timeline" aria-label="Timeline of musical eras"></nav></header>
+  <main id="deck"></main>
+  <footer class="controls">
+    <button id="prev" aria-label="Previous slide">← Back</button>
+    <span id="counter"></span>
+    <button id="next" aria-label="Next slide">Next →</button>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="epochs.js"></script>
+  <script src="db.js"></script>
+  <script>
+    const EPOCHS = window.EPOCHS;
+    const deck = document.getElementById("deck");
+    const timeline = document.getElementById("timeline");
+
+    // Tiny helper: el("div", "class", "text", [children])
+    function el(tag, cls, text, children) {
+      const node = document.createElement(tag);
+      if (cls) node.className = cls;
+      if (text != null) node.textContent = text;
+      (children || []).forEach(c => c && node.appendChild(c));
+      return node;
+    }
+
+    function pointList(points) {
+      return el("ul", null, null, points.map(([en, de]) =>
+        el("li", null, null, [el("span", "en", en), el("span", "de", de)])
+      ));
+    }
+
+    function card(title, titleDe, body, extraClass) {
+      const h = el("h3", null, title, [el("span", "de", titleDe)]);
+      return el("div", "card" + (extraClass ? " " + extraClass : ""), null, [h].concat(body));
+    }
+
+    function listenUrl(l) {
+      return l.url || "https://www.youtube.com/results?search_query=" + encodeURIComponent(l.query);
+    }
+
+    function quizUrl() {
+      return new URL("quiz.html", location.href).href;
+    }
+
+    // ---------- Build slides ----------
+    const slides = [];
+
+    slides.push(el("section", "slide title-slide", null, [
+      el("div", "ornament", "◆ ◆ ◆"),
+      el("h1", null, "Musical Eras"),
+      el("div", "de", "Die Epochen der Musikgeschichte"),
+      el("p", "sub", "From Gregorian chant to electronic music, 7 eras in chronological order."),
+      el("p", "by", "Matteo · Music · November 2026")
+    ]));
+
+    EPOCHS.forEach((e, i) => {
+      const link = el("a", "btn", "▶ Listen on YouTube");
+      link.href = listenUrl(e.listening);
+      link.target = "_blank";
+      link.rel = "noopener";
+
+      slides.push(el("section", "slide epoch", null, [
+        el("div", "epoch-head", null, [
+          el("span", "num", (i + 1) + " / " + EPOCHS.length),
+          el("h2", null, e.name),
+          el("span", "de", e.de)
+        ]),
+        el("div", "grid", null, [
+          card("Era", "Zeitraum", [
+            el("div", "era-years", e.years),
+            el("div", "era-text", e.era[0], [el("span", "de", e.era[1])])
+          ]),
+          card("Artists", "Komponisten", [pointList(e.artists)]),
+          card("Characteristics", "Merkmale", [pointList(e.characteristics)]),
+          card("Innovations", "Neuerungen", [pointList(e.innovations)]),
+          card("Instruments", "Instrumente", [pointList(e.instruments)]),
+          card("Listening", "Hörbeispiel", [el("div", "listen-title", e.listening.title), link], "listen-card")
+        ])
+      ]));
+    });
+
+    const qLink = el("a", null, quizUrl());
+    qLink.href = quizUrl();
+    qLink.target = "_blank";
+    const board = el("ol", "board");
+    const boardMsg = el("p", "board-msg", "Loading leaderboard …");
+    slides.push(el("section", "slide board-slide", null, [
+      el("div", "ornament", "◆ ◆ ◆"),
+      el("h2", null, "Leaderboard"),
+      el("div", "de", "Rangliste des Quiz"),
+      el("p", "join", "Play the quiz · Spiel mit: ", [el("br"), qLink]),
+      board,
+      boardMsg
+    ]));
+
+    slides.forEach(s => deck.appendChild(s));
+
+    // ---------- Timeline ----------
+    const tlItems = EPOCHS.map((e, i) => {
+      const b = el("button", "tl-item", null, [
+        el("span", "tl-dot"),
+        el("span", "tl-name", e.name),
+        el("span", "tl-years", e.years)
+      ]);
+      b.title = e.name + " / " + e.de;
+      b.addEventListener("click", () => go(i + 1));
+      timeline.appendChild(b);
+      return b;
+    });
+
+    // ---------- Navigation ----------
+    let current = 0;
+    const prev = document.getElementById("prev");
+    const next = document.getElementById("next");
+    const counter = document.getElementById("counter");
+
+    function go(n) {
+      current = Math.max(0, Math.min(slides.length - 1, n));
+      slides.forEach((s, i) => s.classList.toggle("active", i === current));
+      const epochIndex = current - 1; // slide 1..7 = epochs
+      tlItems.forEach((t, i) => {
+        t.classList.toggle("active", i === epochIndex);
+        t.classList.toggle("past", i < epochIndex || current === slides.length - 1);
+      });
+      counter.textContent = (current + 1) + " / " + slides.length;
+      prev.disabled = current === 0;
+      next.disabled = current === slides.length - 1;
+      history.replaceState(null, "", "#" + (current + 1));
+    }
+
+    prev.addEventListener("click", () => go(current - 1));
+    next.addEventListener("click", () => go(current + 1));
+    document.addEventListener("keydown", ev => {
+      if (["ArrowRight", "PageDown", " "].includes(ev.key)) { ev.preventDefault(); go(current + 1); }
+      if (["ArrowLeft", "PageUp"].includes(ev.key)) { ev.preventDefault(); go(current - 1); }
+      if (ev.key === "Home") go(0);
+      if (ev.key === "End") go(slides.length - 1);
+    });
+
+    const start = parseInt(location.hash.slice(1), 10);
+    go(Number.isFinite(start) ? start - 1 : 0);
+
+    // ---------- Live leaderboard ----------
+    window.DB.watchScores(list => {
+      board.replaceChildren();
+      if (list === null) {
+        boardMsg.textContent = "The live leaderboard is not available right now (no connection to the database). Die Rangliste ist gerade nicht erreichbar, das Quiz funktioniert trotzdem.";
+        return;
+      }
+      if (list.length === 0) {
+        boardMsg.textContent = "No scores yet. Be the first! · Noch keine Punkte.";
+        return;
+      }
+      boardMsg.textContent = "";
+      list.slice(0, 10).forEach(p => {
+        board.appendChild(el("li", null, null, [el("span", null, p.name), el("span", "pts", p.score + " pts")]));
+      });
+    });
+  </script>
+</body>
+</html>
