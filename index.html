@@ -112,27 +112,80 @@
   .listen-title { line-height: 1.3; margin-bottom: 0.7em; }
   .listen-card .btn { align-self: flex-start; font-size: 0.9em; }
 
-  /* Leaderboard slide */
-  .board-slide { align-items: center; }
-  .board-slide h2 { font-size: 2.6em; margin-top: 0.2em; }
-  .board-slide .de { font-size: 1.2em; }
-  .join { margin: 0.6em 0 0.9em; color: var(--muted); text-align: center; }
-  .join a { font-size: 1.2em; word-break: break-all; }
-  .board { width: min(32em, 100%); list-style: none; margin: 0; padding: 0; counter-reset: rank; overflow: hidden; }
-  .board li {
-    counter-increment: rank;
-    display: grid;
-    grid-template-columns: 2.2em 1fr auto;
-    align-items: baseline;
-    padding: 0.38em 0.6em;
-    border-bottom: 1px solid var(--line);
-    font-size: 1.1em;
+  /* Live-Quiz (letzte Folie) */
+  .quiz-slide { align-items: center; }
+  #host { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; min-height: 0; position: relative; }
+  .h-title { font-size: 2.5em; text-align: center; margin-top: 0.15em; }
+  .h-sub { color: var(--muted); text-align: center; margin: 0.3em 0 0.7em; max-width: 34em; line-height: 1.4; }
+  .h-url {
+    font-size: 1.9em; color: var(--gold); text-align: center; word-break: break-all;
+    padding: 0.35em 0.9em; border: 1px solid var(--gold-soft); border-radius: 0.4em; background: var(--card);
   }
-  .board li::before { content: counter(rank) "."; color: var(--muted); }
-  .board li:nth-child(1) { color: var(--gold); font-size: 1.35em; }
-  .board li:nth-child(2), .board li:nth-child(3) { color: #e6cf9e; }
-  .board .pts { font-variant-numeric: tabular-nums; }
-  .board-msg { color: var(--muted); text-align: center; max-width: 30em; line-height: 1.4; }
+  .h-count { margin: 0.9em 0 0.5em; font-size: 1.2em; }
+  .chips { display: flex; flex-wrap: wrap; gap: 0.45em; justify-content: center; max-width: 54em; overflow: auto; min-height: 0; }
+  .chip { border-radius: 999px; padding: 0.3em 0.9em; background: var(--card); border: 1px solid var(--line); animation: pop 0.4s cubic-bezier(.2, 1.6, .4, 1); }
+  .chip:disabled { opacity: 1; cursor: default; }
+  .chip:hover:not(:disabled) { border-color: var(--bad); text-decoration: line-through; background: var(--card); }
+  .h-actions { margin-top: auto; padding-top: 0.8em; display: flex; gap: 0.8em; justify-content: center; align-items: center; flex-wrap: wrap; }
+  .linkish { border: none; color: var(--muted); font-size: 0.8em; text-decoration: underline; padding: 0.3em; }
+  .linkish:hover { background: none; color: var(--text); }
+  .h-login { display: flex; gap: 0.5em; align-items: center; flex-wrap: wrap; justify-content: center; font-size: 0.85em; }
+  .h-login input { font: inherit; color: var(--text); background: var(--card); border: 1px solid var(--line); border-radius: 0.4em; padding: 0.45em 0.7em; }
+  .h-err { color: var(--bad); }
+  .h-toast { position: absolute; top: 0.5em; left: 50%; transform: translateX(-50%); background: #2e1c19; border: 1px solid var(--bad); padding: 0.5em 1em; border-radius: 0.4em; z-index: 5; }
+  .h-top { width: 100%; display: flex; justify-content: space-between; align-items: baseline; color: var(--muted); }
+  .answered { font-size: 1.25em; }
+  .answered strong { color: var(--gold); font-weight: normal; font-size: 1.3em; }
+  .h-question { font-size: 2.1em; text-align: center; line-height: 1.25; margin: 0.35em 0 0.75em; max-width: 30em; }
+  .tiles { width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 0.7em; }
+  .tile {
+    display: flex; align-items: center; gap: 0.8em; padding: 0.8em 1em; position: relative; overflow: hidden;
+    border-radius: 0.6em; background: var(--card); border: 1px solid var(--line); font-size: 1.35em; line-height: 1.25;
+    transition: opacity 0.4s, box-shadow 0.4s;
+  }
+  .tile.dim { opacity: 0.35; }
+  .tile.correct { border-color: var(--ok); box-shadow: inset 0 0 0 2px var(--ok); animation: pop 0.5s cubic-bezier(.2, 1.6, .4, 1); }
+  .tile .cnt { margin-left: auto; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .tile .bar { position: absolute; left: 0; bottom: 0; height: 5px; width: 0; transition: width 0.9s ease-out; }
+  .c0 .bar { background: var(--a0); } .c1 .bar { background: var(--a1); } .c2 .bar { background: var(--a2); } .c3 .bar { background: var(--a3); }
+  .h-info { margin-top: 0.9em; color: var(--muted); text-align: center; font-size: 1.15em; max-width: 36em; line-height: 1.4; }
+  .h-table { width: min(34em, 100%); border-collapse: collapse; font-size: 1.05em; }
+  .h-table td { padding: 0.24em 0.55em; border-bottom: 1px solid var(--line); }
+  .h-table .r { color: var(--muted); width: 2.4em; }
+  .h-table .d, .h-table .t, .h-table .m { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .h-table .t { color: var(--gold); }
+  .h-table .plus { color: var(--ok); } .h-table .minus { color: var(--bad); }
+  .h-table .m { width: 3em; font-size: 0.8em; } .h-table .up { color: var(--ok); } .h-table .down { color: var(--bad); }
+  .row-in { animation: rowIn 0.45s both; }
+  @keyframes rowIn { from { opacity: 0; transform: translateX(-24px); } to { opacity: 1; transform: none; } }
+  .pop { animation: pop 0.5s cubic-bezier(.2, 1.6, .4, 1); }
+  @keyframes pop { from { transform: scale(0.6); opacity: 0; } to { transform: none; opacity: 1; } }
+  .runners { display: flex; gap: 0.8em; justify-content: center; min-height: 2.4em; margin: 0.4em 0 0.2em; flex-wrap: wrap; }
+  .runner { display: flex; gap: 0.6em; align-items: baseline; padding: 0.35em 1em; border: 1px solid var(--line); border-radius: 0.5em; background: var(--card); animation: rowIn 0.6s both; }
+  .runner-place { color: var(--muted); }
+  .runner-pts { color: var(--muted); font-size: 0.85em; }
+  .drum { font-size: 1.5em; color: var(--gold); min-height: 1.5em; margin: 0.2em 0; opacity: 0; }
+  .drum.show { animation: drum 0.9s ease-in-out infinite alternate; }
+  @keyframes drum { from { opacity: 0.35; transform: scale(0.97); } to { opacity: 1; transform: scale(1.05); } }
+  .podium { flex: 1; min-height: 0; width: min(42em, 100%); display: flex; align-items: flex-end; justify-content: center; gap: 1em; }
+  .step { flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; }
+  .who { opacity: 0; text-align: center; margin-bottom: 0.4em; }
+  .who-name { font-size: 1.5em; }
+  .who-pts { color: var(--muted); font-variant-numeric: tabular-nums; }
+  .step.p1 .who-name { font-size: 2.1em; color: var(--gold); }
+  .step.show .who { animation: pop 0.6s 0.6s cubic-bezier(.2, 1.6, .4, 1) both; }
+  .block {
+    width: 100%; height: 0; overflow: hidden; border-radius: 0.5em 0.5em 0 0;
+    display: flex; justify-content: center; padding-top: 0.3em;
+    font-size: 2.2em; color: #1a140c; background: linear-gradient(180deg, #e2c07a, #8c7442);
+    transition: height 0.9s cubic-bezier(.2, .9, .3, 1.15);
+  }
+  .step.p2 .block { background: linear-gradient(180deg, #d9d4cb, #8f8a80); }
+  .step.p3 .block { background: linear-gradient(180deg, #c9885a, #7a4f32); }
+  .step.p1.show .block { height: 62%; }
+  .step.p2.show .block { height: 46%; }
+  .step.p3.show .block { height: 34%; }
+  .confetti { position: fixed; inset: 0; pointer-events: none; z-index: 20; }
 
   /* Controls */
   .controls {
@@ -167,7 +220,7 @@
       break-after: page; page-break-after: always;
       background: var(--bg);
     }
-    .slide:last-child { break-after: auto; page-break-after: auto; }
+    .epoch:nth-last-child(2) { break-after: auto; page-break-after: auto; }
     .print-hide { display: none !important; }
     .listen-card .btn { border: none; padding: 0; color: var(--gold); }
   }
@@ -184,7 +237,9 @@
 
   <script src="config.js"></script>
   <script src="epochs.js"></script>
+  <script src="questions.js"></script>
   <script src="db.js"></script>
+  <script src="host.js"></script>
   <script>
     const EPOCHS = window.EPOCHS;
     const deck = document.getElementById("deck");
@@ -217,10 +272,6 @@
 
     function listenUrl(l) {
       return l.url || "https://www.youtube.com/results?search_query=" + encodeURIComponent(l.query);
-    }
-
-    function quizUrl() {
-      return new URL("quiz.html", location.href).href;
     }
 
     // ---------- Build slides ----------
@@ -258,18 +309,10 @@
       ]));
     });
 
-    const qLink = el("a", null, quizUrl());
-    qLink.href = quizUrl();
-    qLink.target = "_blank";
-    const board = el("ol", "board");
-    const boardMsg = el("p", "board-msg", "Rangliste wird geladen …");
-    slides.push(el("section", "slide board-slide", null, [
-      el("div", "ornament", "◆ ◆ ◆"),
-      el("h2", null, "Rangliste"),
-      el("p", "join", "Spiel mit beim Quiz:", [el("br"), qLink]),
-      board,
-      boardMsg
-    ]));
+    const hostBox = el("div");
+    hostBox.id = "host";
+    const quizSlide = el("section", "slide quiz-slide print-hide", null, [hostBox]);
+    slides.push(quizSlide);
 
     slides.forEach(s => deck.appendChild(s));
 
@@ -309,7 +352,15 @@
     prev.addEventListener("click", () => go(current - 1));
     next.addEventListener("click", () => go(current + 1));
     document.addEventListener("keydown", ev => {
-      if (["ArrowRight", "PageDown", " "].includes(ev.key)) { ev.preventDefault(); go(current + 1); }
+      if (ev.target.closest && ev.target.closest("input, button, a")) {
+        if (ev.target.matches("input") || ev.key === " " || ev.key === "Enter") return;
+      }
+      if (["ArrowRight", "PageDown", " "].includes(ev.key)) {
+        ev.preventDefault();
+        // Auf der Quiz-Folie steuert "Weiter" das Quiz
+        if (slides[current] === quizSlide && window.Host.primary()) return;
+        go(current + 1);
+      }
       if (["ArrowLeft", "PageUp"].includes(ev.key)) { ev.preventDefault(); go(current - 1); }
       if (ev.key === "Home") go(0);
       if (ev.key === "End") go(slides.length - 1);
@@ -318,22 +369,7 @@
     const start = parseInt(location.hash.slice(1), 10);
     go(Number.isFinite(start) ? start - 1 : 0);
 
-    // ---------- Live leaderboard ----------
-    window.DB.watchScores(list => {
-      board.replaceChildren();
-      if (list === null) {
-        boardMsg.textContent = "Die Rangliste ist gerade nicht erreichbar (keine Verbindung zur Datenbank). Das Quiz funktioniert trotzdem.";
-        return;
-      }
-      if (list.length === 0) {
-        boardMsg.textContent = "Noch keine Punkte. Wer ist zuerst dran?";
-        return;
-      }
-      boardMsg.textContent = "";
-      list.slice(0, 10).forEach(p => {
-        board.appendChild(el("li", null, null, [el("span", null, p.name), el("span", "pts", p.score + " Punkte")]));
-      });
-    });
+    window.Host.init(hostBox);
   </script>
 </body>
 </html>

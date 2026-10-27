@@ -1,10 +1,10 @@
-// Small wrapper around the Firebase Realtime Database.
-// Loads the Firebase SDK from the CDN only if config.js is filled in.
-// If anything fails (no config, school Wi-Fi blocks Firebase, offline),
-// the pages keep working and show a friendly message instead.
+// Verbindung zu Firebase (Datenbank + Anmeldung).
+// Lädt das Firebase-SDK vom CDN, nur wenn config.js ausgefüllt ist.
+// Wenn etwas nicht klappt (keine Config, Schul-WLAN blockiert, offline),
+// liefert "ready" null und die Seiten zeigen einen Hinweis statt eines Fehlers.
 (function () {
   const SDK = "https://www.gstatic.com/firebasejs/10.12.2/";
-  const TIMEOUT_MS = 8000;
+  const TIMEOUT_MS = 10000;
   const MAX_NAME = 20;
 
   function isConfigured(cfg) {
@@ -28,7 +28,7 @@
     ]);
   }
 
-  // Clean a player name: no control characters or angle brackets, max 20 chars.
+  // Name bereinigen: keine Steuerzeichen oder spitzen Klammern, max. 20 Zeichen.
   function cleanName(raw) {
     return String(raw || "")
       .normalize("NFC")
@@ -38,76 +38,49 @@
       .slice(0, MAX_NAME);
   }
 
-  // Firebase keys must not contain . # $ [ ] /
+  // Schlüssel für die Namenssperre: "Max", "max" und " MAX " sind derselbe Name.
+  // Firebase-Schlüssel dürfen . # $ [ ] / nicht enthalten.
   function nameKey(name) {
-    return name.toLowerCase().replace(/[.#$\[\]\/]/g, "_");
+    return cleanName(name).toLowerCase().replace(/[.#$\[\]\/]/g, "_");
   }
+
+  // Nur zum Testen auf dem eigenen Rechner: ?emulator verbindet mit dem Firebase-Emulator.
+  const useEmulator = /^(localhost|127\.0\.0\.1)$/.test(location.hostname) && /[?&]emulator\b/.test(location.search);
 
   const ready = (async () => {
     const cfg = window.FIREBASE_CONFIG;
     if (!isConfigured(cfg)) return null;
     try {
       await withTimeout(loadScript(SDK + "firebase-app-compat.js"), TIMEOUT_MS);
-      await withTimeout(loadScript(SDK + "firebase-database-compat.js"), TIMEOUT_MS);
-      const app = window.firebase.initializeApp(cfg);
-      return app.database();
+      await withTimeout(Promise.all([
+        loadScript(SDK + "firebase-database-compat.js"),
+        loadScript(SDK + "firebase-auth-compat.js")
+      ]), TIMEOUT_MS);
+      const fb = window.firebase;
+      const app = fb.initializeApp(cfg);
+      const db = app.database();
+      const auth = app.auth();
+      if (useEmulator) {
+        db.useEmulator("127.0.0.1", 9000);
+        auth.useEmulator("http://127.0.0.1:9099", { disableWarnings: true });
+      }
+      return { db, auth, TIMESTAMP: fb.database.ServerValue.TIMESTAMP };
     } catch (err) {
       console.warn("Firebase not available:", err);
       return null;
     }
   })();
 
-  // Saves the score. Keeps the old entry if it is higher or equal.
-  // Resolves to "saved", "kept" or "offline".
-  async function saveScore(rawName, score) {
-    const name = cleanName(rawName);
-    const db = await ready;
-    if (!db || !name) return "offline";
+  // Wartet, bis die Datenbank wirklich antwortet (z. B. wenn das WLAN Firebase blockiert).
+  async function reachable(live) {
     try {
-      const ref = db.ref("scores/" + nameKey(name));
-      const result = await withTimeout(
-        ref.transaction(current => {
-          if (current && typeof current.score === "number" && current.score >= score) return; // keep
-          return { name, score, timestamp: window.firebase.database.ServerValue.TIMESTAMP };
-        }),
-        TIMEOUT_MS
-      );
-      return result.committed ? "saved" : "kept";
+      await withTimeout(live.db.ref("quiz/state").once("value"), TIMEOUT_MS);
+      return true;
     } catch (err) {
-      console.warn("Could not save score:", err);
-      return "offline";
+      console.warn("Database not reachable:", err);
+      return false;
     }
   }
 
-  // Calls onChange(list) on every change, sorted best first.
-  // Calls onChange(null) if the database cannot be reached.
-  async function watchScores(onChange) {
-    const db = await ready;
-    if (!db) return onChange(null);
-    let gotData = false;
-    const timer = setTimeout(() => { if (!gotData) onChange(null); }, TIMEOUT_MS);
-    db.ref("scores").on(
-      "value",
-      snap => {
-        gotData = true;
-        clearTimeout(timer);
-        const list = [];
-        snap.forEach(child => {
-          const v = child.val() || {};
-          if (typeof v.score === "number") {
-            list.push({ name: cleanName(v.name) || "?", score: v.score, timestamp: v.timestamp || 0 });
-          }
-        });
-        list.sort((a, b) => b.score - a.score || a.timestamp - b.timestamp);
-        onChange(list);
-      },
-      err => {
-        console.warn("Leaderboard error:", err);
-        clearTimeout(timer);
-        onChange(null);
-      }
-    );
-  }
-
-  window.DB = { ready, saveScore, watchScores, cleanName, MAX_NAME };
+  window.Live = { ready, reachable, cleanName, nameKey, MAX_NAME };
 })();

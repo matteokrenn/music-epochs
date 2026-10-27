@@ -6,55 +6,47 @@
 <title>Musik-Quiz</title>
 <link rel="stylesheet" href="style.css">
 <style>
-  body { font-size: 18px; min-height: 100vh; display: flex; justify-content: center; }
-  main { width: min(36em, 100%); padding: 2em 16px 3em; }
-  header { text-align: center; margin-bottom: 1.6em; }
-  header h1 { font-size: 2.1em; }
-  header .de { font-size: 1.1em; }
+  body { font-size: 19px; min-height: 100vh; display: flex; justify-content: center; }
+  main { width: min(40em, 100%); padding: 1.6em 16px 3em; }
+  header { text-align: center; margin-bottom: 1.4em; }
+  header h1 { font-size: 2em; }
+  .me { color: var(--muted); font-size: 0.85em; margin-top: 0.3em; min-height: 1.2em; }
 
-  .screen[hidden] { display: none; }
+  .center { text-align: center; }
+  .big { font-size: 1.5em; line-height: 1.3; }
+  .muted { color: var(--muted); }
+  .msg { color: var(--bad); min-height: 1.3em; margin: 0.6em 0; }
+  .info-msg { color: var(--gold); margin: 0 0 1em; line-height: 1.4; }
 
   label { display: block; margin-bottom: 0.4em; }
   input[type="text"] {
-    width: 100%;
-    font: inherit;
-    color: var(--text);
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 0.4em;
-    padding: 0.7em 0.8em;
+    width: 100%; font: inherit; color: var(--text);
+    background: var(--card); border: 1px solid var(--line); border-radius: 0.4em; padding: 0.7em 0.8em;
   }
-  .hint { color: var(--muted); font-size: 0.85em; margin: 0.5em 0 1.2em; }
 
-  .progress { display: flex; justify-content: space-between; color: var(--muted); font-size: 0.9em; margin-bottom: 0.4em; }
-  .bar { height: 3px; background: var(--line); border-radius: 2px; margin-bottom: 1.4em; overflow: hidden; }
-  .bar > div { height: 100%; width: 0; background: var(--gold); transition: width 0.3s; }
-
-  .question { font-size: 1.3em; line-height: 1.35; margin-bottom: 1em; }
-  .answers { display: grid; gap: 0.6em; }
+  .progress { color: var(--muted); font-size: 0.9em; margin-bottom: 0.6em; }
+  .question { font-size: 1.35em; line-height: 1.35; margin: 0 0 1em; }
+  .answers { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7em; }
   .answers button {
-    border-radius: 0.5em;
-    text-align: left;
-    padding: 0.8em 1em;
-    background: var(--card);
-    border-color: var(--line);
-    line-height: 1.3;
+    display: flex; align-items: center; gap: 0.7em;
+    border-radius: 0.6em; text-align: left; padding: 0.9em 1em; line-height: 1.3;
+    background: var(--card); border: 1px solid var(--line); min-height: 4.2em;
   }
   .answers button:hover:not(:disabled) { border-color: var(--gold); }
-  .answers button:disabled { opacity: 1; }
-  .answers button.correct { border-color: var(--ok); background: #1d2a20; }
-  .answers button.wrong { border-color: var(--bad); background: #2e1c19; }
-  .answers button.dim { opacity: 0.45; }
+  @media (max-width: 520px) { .answers { grid-template-columns: 1fr; } }
 
-  .feedback { margin-top: 1.2em; padding: 0.9em 1em; border-radius: 0.5em; border: 1px solid var(--line); background: var(--bg-2); line-height: 1.4; }
-  .feedback .verdict { font-size: 1.15em; margin-bottom: 0.3em; }
-  .feedback.ok .verdict { color: var(--ok); }
-  .feedback.bad .verdict { color: var(--bad); }
-  .actions { margin-top: 1.2em; text-align: right; }
-
-  .result { text-align: center; }
-  .score { font-size: 4em; color: var(--gold); line-height: 1; margin: 0.3em 0; }
-  .save-msg { color: var(--muted); line-height: 1.4; margin: 1em 0 1.5em; }
+  .card-box {
+    background: linear-gradient(180deg, var(--card), var(--bg-2));
+    border: 1px solid var(--line); border-radius: 0.7em; padding: 1.4em 1.2em; text-align: center;
+  }
+  .result { font-size: 2.2em; margin-bottom: 0.2em; }
+  .result.ok { color: var(--ok); } .result.bad { color: var(--bad); }
+  .total { font-size: 1.15em; margin-top: 0.8em; }
+  .total strong { color: var(--gold); font-weight: normal; font-size: 1.3em; }
+  .pop { animation: pop 0.45s cubic-bezier(.2, 1.6, .4, 1); }
+  @keyframes pop { from { transform: scale(0.6); opacity: 0; } to { transform: none; opacity: 1; } }
+  .dots::after { content: ""; animation: dots 1.4s steps(4) infinite; }
+  @keyframes dots { 0% { content: ""; } 25% { content: "."; } 50% { content: ".."; } 75% { content: "..."; } }
 </style>
 </head>
 <body>
@@ -62,201 +54,244 @@
   <header>
     <div class="ornament">◆ ◆ ◆</div>
     <h1>Musik-Quiz</h1>
-    <div class="de">Die Epochen der Musik</div>
+    <div class="me" id="me"></div>
   </header>
-
-  <section class="screen" id="start">
-    <form id="name-form">
-      <label for="name">Dein Name</label>
-      <input type="text" id="name" maxlength="20" autocomplete="off" required>
-      <p class="hint">12 Fragen, 1 Punkt pro richtige Antwort.</p>
-      <button type="submit" class="btn-primary">Los geht's →</button>
-    </form>
-  </section>
-
-  <section class="screen" id="play" hidden>
-    <div class="progress"><span id="qnum"></span><span id="points"></span></div>
-    <div class="bar"><div id="bar"></div></div>
-    <p class="question" id="question"></p>
-    <div class="answers" id="answers"></div>
-    <div class="feedback" id="feedback" hidden>
-      <div class="verdict" id="verdict"></div>
-      <span id="explain"></span>
-    </div>
-    <div class="actions"><button class="btn-primary" id="next" hidden>Weiter →</button></div>
-  </section>
-
-  <section class="screen result" id="end" hidden>
-    <p id="end-name"></p>
-    <div class="score" id="final"></div>
-    <p class="de">Punkte</p>
-    <p class="save-msg" id="save-msg">Punkte werden gespeichert …</p>
-    <p>Schau auf die Präsentation, dort ist die Rangliste!</p>
-    <button id="again">Nochmal spielen</button>
-  </section>
+  <div id="view"><p class="center muted dots">Verbinde mit dem Quiz</p></div>
 </main>
 
 <script src="config.js"></script>
+<script src="questions.js"></script>
 <script src="db.js"></script>
 <script>
-  // Jede Frage: q = Frage, a = Antworten (die erste ist richtig, die Reihenfolge wird gemischt), info = Erklärung.
-  const QUESTIONS = [
-    {
-      q: "Welche Epoche ist die älteste?",
-      a: ["Mittelalter", "Barock", "Romantik", "Neue Musik"],
-      info: "Das Mittelalter kommt zuerst. Dann Renaissance, Barock, Wiener Klassik, Romantik, Moderne und Neue Musik."
-    },
-    {
-      q: "Wo gab es im Mittelalter vor allem Musik?",
-      a: ["In der Kirche", "Im Radio", "Im Kino", "Im Fußballstadion"],
-      info: "Im Mittelalter wurde vor allem in der Kirche gesungen."
-    },
-    {
-      q: "Was wurde im Mittelalter erfunden?",
-      a: ["Die Notenlinien", "Die Schallplatte", "Der Computer", "Die E-Gitarre"],
-      info: "Mit Notenlinien konnte man Lieder zum ersten Mal richtig aufschreiben."
-    },
-    {
-      q: "Was passiert in der Renaissance mit den Noten?",
-      a: ["Sie werden zum ersten Mal gedruckt", "Sie werden verboten", "Sie werden im Computer gespeichert", "Sie werden nur noch gesungen"],
-      info: "Ab 1501 wurden Noten gedruckt. Vorher musste man sie mit der Hand abschreiben."
-    },
-    {
-      q: "Welches Instrument sieht aus wie eine Gitarre und war in der Renaissance beliebt?",
-      a: ["Die Laute", "Die Tuba", "Der Synthesizer", "Das Schlagzeug"],
-      info: "Die Laute war das beliebteste Instrument der Renaissance."
-    },
-    {
-      q: "Wer hat „Die vier Jahreszeiten“ geschrieben?",
-      a: ["Antonio Vivaldi", "Ludwig van Beethoven", "Frédéric Chopin", "John Cage"],
-      info: "„Die vier Jahreszeiten“ sind von Vivaldi, aus dem Barock."
-    },
-    {
-      q: "Welche Epoche endet 1750, als Bach stirbt?",
-      a: ["Barock", "Mittelalter", "Romantik", "Moderne"],
-      info: "Mit dem Tod von Johann Sebastian Bach endet der Barock."
-    },
-    {
-      q: "In welcher Stadt lebten Haydn, Mozart und Beethoven?",
-      a: ["Wien", "Paris", "Berlin", "Rom"],
-      info: "Deshalb heißt die Epoche „Wiener Klassik“."
-    },
-    {
-      q: "Wer hat „Eine kleine Nachtmusik“ geschrieben?",
-      a: ["Wolfgang Amadeus Mozart", "Johann Sebastian Bach", "Frédéric Chopin", "Claude Debussy"],
-      info: "„Eine kleine Nachtmusik“ ist eines der bekanntesten Stücke von Mozart."
-    },
-    {
-      q: "Worum geht es in der Musik der Romantik?",
-      a: ["Um Gefühle, Natur und Träume", "Um Computer", "Um Fußball", "Um Mathematik"],
-      info: "In der Romantik soll die Musik starke Gefühle zeigen."
-    },
-    {
-      q: "Was passierte 1913 bei einem Konzert in Paris?",
-      a: ["Das Publikum regte sich so auf, dass es Tumult gab", "Das erste Klavier wurde gebaut", "Mozart gab ein Konzert", "Es gab einen Stromausfall"],
-      info: "Die Musik von Strawinsky war so neu, dass sich viele Leute aufgeregt haben."
-    },
-    {
-      q: "Was hört man bei dem Stück „4′33″“ von John Cage?",
-      a: ["Keine Töne, nur Stille und Geräusche im Raum", "Ein lautes Orchester", "Einen Chor", "Eine Orgel"],
-      info: "Der Musiker spielt 4 Minuten und 33 Sekunden lang keinen einzigen Ton."
-    }
-  ];
+  const Q = window.QUESTIONS;
+  const view = document.getElementById("view");
+  const meLine = document.getElementById("me");
 
-  const $ = id => document.getElementById(id);
-  const screens = { start: $("start"), play: $("play"), end: $("end") };
-  let playerName = "";
-  let index = 0;
-  let score = 0;
+  let live = null;
+  let uid = null;
+  let state = { phase: "lobby", q: 0 };
+  let me = null;          // mein Eintrag in quiz/players
+  let myKey = null;       // mein Namensschlüssel (für Rauswurf-Erkennung)
+  let wasJoined = false;
+  let notice = "";        // Hinweis über dem Anmeldeformular
+  let myScore = null;     // mein Eintrag in quiz/scores
+  let myAnswer = null;    // meine Antwort auf die aktuelle Frage
+  let answerRef = null;
+  let finalShownAt = 0;
+  let lastKey = "";
 
-  function show(name) {
-    Object.entries(screens).forEach(([k, s]) => { s.hidden = k !== name; });
+  function el(tag, cls, text, children) {
+    const node = document.createElement(tag);
+    if (cls) node.className = cls;
+    if (text != null) node.textContent = text;
+    (children || []).forEach(c => c && node.appendChild(c));
+    return node;
   }
 
-  function shuffle(list) {
-    const a = list.slice();
-    for (let i = a.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [a[i], a[j]] = [a[j], a[i]];
+  function show(...nodes) { view.replaceChildren(...nodes); }
+
+  function pts(n) { return (n > 0 ? "+" : n < 0 ? "−" : "") + Math.abs(n); }
+
+  // ---------- Start ----------
+  (async () => {
+    live = await window.Live.ready;
+    if (!live || !(await window.Live.reachable(live))) {
+      show(el("div", "card-box", null, [
+        el("p", "big", "Keine Verbindung zum Quiz"),
+        el("p", "muted", "Das WLAN blockiert vielleicht die Verbindung. Sag Matteo Bescheid.")
+      ]));
+      return;
     }
-    return a;
+    live.auth.onAuthStateChanged(user => {
+      if (!user) { live.auth.signInAnonymously().catch(err => fail(err)); return; }
+      if (uid) return;
+      uid = user.uid;
+      listen();
+    });
+  })();
+
+  function fail(err) {
+    console.warn(err);
+    show(el("div", "card-box", null, [
+      el("p", "big", "Da ist etwas schiefgelaufen"),
+      el("p", "muted", "Lade die Seite neu. Wenn es nicht klappt, sag Matteo Bescheid.")
+    ]));
   }
 
-  $("name-form").addEventListener("submit", ev => {
-    ev.preventDefault();
-    playerName = window.DB.cleanName($("name").value);
-    if (!playerName) { $("name").value = ""; $("name").focus(); return; }
-    index = 0;
-    score = 0;
-    show("play");
-    renderQuestion();
-  });
+  function listen() {
+    const db = live.db;
+    db.ref("quiz/state").on("value", snap => {
+      const s = snap.val() || { phase: "lobby", q: 0 };
+      const qChanged = s.q !== state.q || !answerRef;
+      state = s;
+      if (s.phase === "final" && !finalShownAt) finalShownAt = Date.now();
+      if (s.phase !== "final") finalShownAt = 0;
+      if (qChanged) watchAnswer();
+      render();
+    });
+    db.ref("quiz/players/" + uid).on("value", async snap => {
+      const v = snap.val();
+      if (v) { me = v; myKey = v.key; wasJoined = true; notice = ""; }
+      else {
+        if (wasJoined) {
+          const lock = myKey ? (await db.ref("quiz/names/" + myKey).once("value")).val() : null;
+          notice = lock === "kicked"
+            ? "Du wurdest aus dem Quiz entfernt. Bitte wähle einen anderen Namen."
+            : "Ein neues Spiel wurde gestartet. Bitte melde dich nochmal an.";
+        }
+        me = null; wasJoined = false;
+      }
+      render();
+    });
+    db.ref("quiz/scores/" + uid).on("value", snap => { myScore = snap.val(); render(); });
+  }
+
+  function watchAnswer() {
+    if (answerRef) answerRef.off();
+    myAnswer = null;
+    answerRef = live.db.ref("quiz/answers/" + (state.q || 0) + "/" + uid);
+    answerRef.on("value", snap => { myAnswer = snap.val(); render(); });
+  }
+
+  // ---------- Anzeige ----------
+  function render() {
+    const key = [state.phase, state.q, !!me, myAnswer ? myAnswer.choice : "-", myScore ? myScore.q + ":" + myScore.total : "-", notice].join("|");
+    if (key === lastKey) return;
+    lastKey = key;
+    meLine.textContent = me ? "Du spielst als: " + me.name : "";
+
+    if (!me) return state.phase === "final" ? renderOver() : renderJoin();
+    if (state.phase === "lobby") return renderLobby();
+    if (state.phase === "question") return myAnswer ? renderWaiting() : renderQuestion();
+    if (state.phase === "reveal" || state.phase === "board") return renderResult();
+    if (state.phase === "final") return renderFinal();
+  }
+
+  function renderJoin() {
+    const input = el("input");
+    input.type = "text"; input.id = "name"; input.maxLength = window.Live.MAX_NAME; input.autocomplete = "off"; input.required = true;
+    const msg = el("p", "msg");
+    const button = el("button", "btn-primary", "Mitmachen →");
+    button.type = "submit";
+    const form = el("form", null, null, [
+      notice ? el("p", "info-msg", notice) : null,
+      el("label", null, "Wie heißt du?"),
+      input, msg, button
+    ]);
+    form.querySelector("label").htmlFor = "name";
+    form.addEventListener("submit", async ev => {
+      ev.preventDefault();
+      button.disabled = true;
+      msg.textContent = "";
+      const err = await join(input.value);
+      if (err) { msg.textContent = err; button.disabled = false; input.focus(); }
+    });
+    show(form);
+    input.focus();
+  }
+
+  async function join(rawName) {
+    const name = window.Live.cleanName(rawName);
+    if (!name) return "Bitte gib deinen Namen ein.";
+    const key = window.Live.nameKey(name);
+    const db = live.db;
+    const lock = db.ref("quiz/names/" + key);
+    try {
+      await lock.set(uid);
+    } catch (e) {
+      const owner = (await lock.once("value")).val();
+      if (owner !== uid) return "Dieser Name ist schon vergeben. Bitte nimm einen anderen.";
+    }
+    try {
+      await db.ref("quiz/players/" + uid).set({ name, key, joinedAt: live.TIMESTAMP });
+      return null;
+    } catch (e) {
+      console.warn(e);
+      return "Anmelden hat nicht geklappt. Versuch es nochmal.";
+    }
+  }
+
+  function renderLobby() {
+    show(el("div", "card-box pop", null, [
+      el("p", "big", "Du bist dabei!"),
+      el("p", "muted dots", "Warte, bis das Quiz startet")
+    ]));
+  }
 
   function renderQuestion() {
-    const item = QUESTIONS[index];
-    $("qnum").textContent = "Frage " + (index + 1) + " / " + QUESTIONS.length;
-    $("points").textContent = score + " Punkte";
-    $("bar").style.width = (index / QUESTIONS.length * 100) + "%";
-
-    $("question").textContent = item.q;
-
-    $("feedback").hidden = true;
-    $("next").hidden = true;
-
-    const box = $("answers");
-    box.replaceChildren();
-    shuffle(item.a).forEach(text => {
-      const b = document.createElement("button");
-      b.textContent = text;
-      b.addEventListener("click", () => answer(b, text === item.a[0]));
+    const qi = state.q;
+    const item = Q[qi];
+    const box = el("div", "answers");
+    window.answerOrder(qi).forEach((orig, pos) => {
+      const b = el("button", null, null, [el("span", "letter l" + pos, window.LETTERS[pos]), el("span", null, item.a[orig])]);
+      b.addEventListener("click", () => answer(orig, box));
       box.appendChild(b);
     });
+    show(
+      el("p", "progress", "Frage " + (qi + 1) + " von " + Q.length),
+      el("p", "question", item.q),
+      box
+    );
   }
 
-  function answer(button, isCorrect) {
-    const item = QUESTIONS[index];
-    if (isCorrect) score++;
-    [...$("answers").children].forEach(b => {
-      b.disabled = true;
-      if (b.textContent === item.a[0]) b.classList.add("correct");
-      else if (b === button) b.classList.add("wrong");
-      else b.classList.add("dim");
-    });
-    const fb = $("feedback");
-    fb.className = "feedback " + (isCorrect ? "ok" : "bad");
-    $("verdict").textContent = isCorrect ? "✓ Richtig!" : "✗ Leider falsch";
-    $("explain").textContent = item.info;
-    fb.hidden = false;
-    $("points").textContent = score + " Punkte";
-    const next = $("next");
-    next.textContent = index === QUESTIONS.length - 1 ? "Fertig →" : "Weiter →";
-    next.hidden = false;
-    next.focus();
+  async function answer(orig, box) {
+    [...box.children].forEach(b => { b.disabled = true; });
+    try {
+      await live.db.ref("quiz/answers/" + state.q + "/" + uid).set({ choice: orig, at: live.TIMESTAMP });
+    } catch (e) {
+      console.warn(e);
+      show(el("div", "card-box", null, [el("p", "big", "Zu spät!"), el("p", "muted", "Die Frage ist schon vorbei.")]));
+    }
   }
 
-  $("next").addEventListener("click", () => {
-    index++;
-    if (index < QUESTIONS.length) renderQuestion();
-    else finish();
-  });
-
-  async function finish() {
-    show("end");
-    $("end-name").textContent = "Gut gemacht, " + playerName + "!";
-    $("final").textContent = score + " / " + QUESTIONS.length;
-    const msg = $("save-msg");
-    msg.textContent = "Punkte werden gespeichert …";
-    const result = await window.DB.saveScore(playerName, score);
-    if (result === "saved") msg.textContent = "Deine Punkte sind jetzt in der Rangliste.";
-    else if (result === "kept") msg.textContent = "Du hattest schon gleich viele oder mehr Punkte. Dein bestes Ergebnis bleibt in der Rangliste.";
-    else msg.textContent = "Speichern hat nicht geklappt (keine Verbindung). Sag deine Punkte einfach laut!";
+  function renderWaiting() {
+    const pos = window.answerOrder(state.q).indexOf(myAnswer.choice);
+    show(el("div", "card-box pop", null, [
+      el("p", "muted", "Deine Antwort:"),
+      el("p", "big", null, [el("span", "letter l" + pos, window.LETTERS[pos]), document.createTextNode(" " + Q[state.q].a[myAnswer.choice])]),
+      el("p", "muted dots", "Warte auf die anderen")
+    ]));
   }
 
-  $("again").addEventListener("click", () => {
-    show("start");
-    $("name").value = playerName;
-    $("name").focus();
-  });
+  function renderResult() {
+    if (!myScore || myScore.q !== state.q) {
+      show(el("div", "card-box", null, [el("p", "big", "Gleich geht's weiter"), el("p", "muted", "Schau nach vorne!")]));
+      return;
+    }
+    const r = myScore.result;
+    const title = r === "right" ? "✓ Richtig!" : r === "wrong" ? "✗ Leider falsch" : "Keine Antwort";
+    show(el("div", "card-box", null, [
+      el("p", "result pop " + (r === "right" ? "ok" : "bad"), title),
+      el("p", "big", pts(myScore.delta) + " Punkte"),
+      el("p", "muted", "Richtig war: " + Q[state.q].a[0]),
+      el("p", "total", null, [
+        document.createTextNode("Du hast "), el("strong", null, String(myScore.total).replace("-", "−")), document.createTextNode(" Punkte"),
+        el("br"),
+        document.createTextNode("Platz " + myScore.rank + " von " + myScore.of)
+      ])
+    ]));
+  }
+
+  // Erst nach der Siegerehrung am Beamer den eigenen Platz zeigen, damit nichts verraten wird.
+  function renderFinal() {
+    const wait = 11000 - (Date.now() - finalShownAt);
+    if (wait > 0) {
+      show(el("div", "card-box pop", null, [el("p", "result", "🏆"), el("p", "big", "Schau nach vorne!"), el("p", "muted", "Jetzt kommt die Siegerehrung.")]));
+      setTimeout(() => { lastKey = ""; render(); }, wait);
+      return;
+    }
+    if (!myScore) return renderOver();
+    show(el("div", "card-box pop", null, [
+      el("p", "result", myScore.rank <= 3 ? "🏆" : "🎵"),
+      el("p", "big", "Platz " + myScore.rank + " von " + myScore.of),
+      el("p", "total", null, [el("strong", null, String(myScore.total).replace("-", "−")), document.createTextNode(" Punkte")]),
+      el("p", "muted", "Danke fürs Mitspielen!")
+    ]));
+  }
+
+  function renderOver() {
+    show(el("div", "card-box", null, [el("p", "big", "Das Quiz ist vorbei"), el("p", "muted", "Danke fürs Mitmachen!")]));
+  }
 </script>
 </body>
 </html>

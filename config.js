@@ -1,19 +1,12 @@
-// =====================================================================
-//  FIREBASE CONFIG  –  !!! PLATZHALTER, NOCH AUSFÜLLEN !!!
-//
-//  1. Firebase Console -> Projekt -> Zahnrad -> Projekteinstellungen
-//  2. Unten bei "Meine Apps" die Web-App wählen -> "Config"
-//  3. Die Werte hier einsetzen. databaseURL ist Pflicht!
-//
-//  Solange hier "PASTE_..." steht, läuft das Quiz ohne Datenbank
-//  und das Leaderboard zeigt nur einen Hinweis.
-// =====================================================================
+// Firebase-Einstellungen für das Live-Quiz.
+// Das ist kein Passwort und darf öffentlich sein. Den Schutz übernehmen
+// die Regeln in der Firebase-Konsole (siehe database.rules.json).
 window.FIREBASE_CONFIG = {
-  apiKey: "PASTE_API_KEY",
-  authDomain: "PASTE_PROJECT_ID.firebaseapp.com",
-  databaseURL: "PASTE_DATABASE_URL",
-  projectId: "PASTE_PROJECT_ID",
-  storageBucket: "PASTE_PROJECT_ID.appspot.com",
-  messagingSenderId: "PASTE_SENDER_ID",
-  appId: "PASTE_APP_ID"
+  apiKey: "AIzaSyDBl1g45u5ocdaTfD2Pw1m13CewkpsQXJA",
+  authDomain: "musik-quiz-5553c.firebaseapp.com",
+  databaseURL: "https://musik-quiz-5553c-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "musik-quiz-5553c",
+  storageBucket: "musik-quiz-5553c.firebasestorage.app",
+  messagingSenderId: "308791861658",
+  appId: "1:308791861658:web:9426b3591bab1e97bd9a23"
 };

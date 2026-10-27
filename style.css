@@ -10,6 +10,10 @@
   --gold-soft: #8c7442;
   --ok: #8fc79a;
   --bad: #e08a7c;
+  --a0: #b5523b;
+  --a1: #3f6fa8;
+  --a2: #4f8a5b;
+  --a3: #a8822f;
   --serif: "Palatino Linotype", "Book Antiqua", Palatino, "Iowan Old Style", Georgia, serif;
 }
 
@@ -58,3 +62,16 @@ button:focus-visible, .btn:focus-visible, input:focus-visible { outline: 2px sol
   letter-spacing: 0.6em;
   font-size: 0.9em;
 }
+
+/* Antwort-Buchstaben A–D (Beamer und Laptops gleich) */
+.letter {
+  flex: none;
+  width: 1.9em; height: 1.9em;
+  border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-weight: bold; color: #fff;
+}
+.l0 { background: var(--a0); }
+.l1 { background: var(--a1); }
+.l2 { background: var(--a2); }
+.l3 { background: var(--a3); }

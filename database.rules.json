@@ -1,0 +1,28 @@
+{
+  "rules": {
+    "quiz": {
+      ".read": true,
+      ".write": "auth != null && auth.uid == 'HIER_DEINE_UID'",
+      "names": {
+        "$key": {
+          ".write": "auth != null && !data.exists() && newData.val() == auth.uid",
+          ".validate": "newData.isString() && $key.length <= 40"
+        }
+      },
+      "players": {
+        "$uid": {
+          ".write": "auth != null && auth.uid == $uid && !data.exists()",
+          ".validate": "newData.hasChildren(['name', 'key', 'joinedAt']) && newData.child('name').isString() && newData.child('name').val().length >= 1 && newData.child('name').val().length <= 20 && newData.child('key').isString() && root.child('quiz/names/' + newData.child('key').val()).val() == auth.uid"
+        }
+      },
+      "answers": {
+        "$q": {
+          "$uid": {
+            ".write": "auth != null && auth.uid == $uid && !data.exists() && root.child('quiz/state/phase').val() == 'question' && root.child('quiz/state/qKey').val() == $q && root.child('quiz/players/' + $uid).exists()",
+            ".validate": "newData.hasChildren(['choice', 'at']) && newData.child('choice').isNumber() && newData.child('choice').val() >= 0 && newData.child('choice').val() <= 3 && newData.child('at').val() == now"
+          }
+        }
+      }
+    }
+  }
+}
