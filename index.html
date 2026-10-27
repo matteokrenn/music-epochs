@@ -194,6 +194,8 @@
     font-size: 0.85em;
   }
   #counter { color: var(--muted); min-width: 4.5em; text-align: center; font-variant-numeric: tabular-nums; }
+  .fs-btn { position: absolute; right: 2.2em; border-color: var(--line); color: var(--muted); font-size: 0.9em; }
+  .controls { position: relative; }
 
   /* Narrow screens (phone): stack the cards and allow scrolling */
   @media (max-width: 760px) {
@@ -233,6 +235,7 @@
     <button id="prev" aria-label="Vorherige Folie">← Zurück</button>
     <span id="counter"></span>
     <button id="next" aria-label="Nächste Folie">Weiter →</button>
+    <button id="fullscreen" class="fs-btn" title="Vollbild (Taste F)">⛶ Vollbild</button>
   </footer>
 
   <script src="config.js"></script>
@@ -349,6 +352,17 @@
       history.replaceState(null, "", "#" + (current + 1));
     }
 
+    // Vollbild: Suchleiste und Taskleiste verschwinden. Raus mit Esc, F oder dem Knopf.
+    const fsButton = document.getElementById("fullscreen");
+    function toggleFullscreen() {
+      if (document.fullscreenElement) document.exitFullscreen();
+      else document.documentElement.requestFullscreen().catch(() => {});
+    }
+    fsButton.addEventListener("click", () => { toggleFullscreen(); fsButton.blur(); });
+    document.addEventListener("fullscreenchange", () => {
+      fsButton.textContent = document.fullscreenElement ? "✕ Vollbild beenden" : "⛶ Vollbild";
+    });
+
     prev.addEventListener("click", () => go(current - 1));
     next.addEventListener("click", () => go(current + 1));
     document.addEventListener("keydown", ev => {
@@ -364,6 +378,7 @@
       if (["ArrowLeft", "PageUp"].includes(ev.key)) { ev.preventDefault(); go(current - 1); }
       if (ev.key === "Home") go(0);
       if (ev.key === "End") go(slides.length - 1);
+      if (ev.key === "f" || ev.key === "F") toggleFullscreen();
     });
 
     const start = parseInt(location.hash.slice(1), 10);
