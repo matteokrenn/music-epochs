@@ -35,10 +35,12 @@
 
   function pts(n) { return (n > 0 ? "+" : n < 0 ? "−" : "±") + Math.abs(n); }
 
+  // Kurzlink (is.gd) auf matteokrenn.github.io/music-epochs/quiz, damit das Abtippen schneller geht.
+  const SHORT_QUIZ_URL = "is.gd/bjhs4f";
+
   function quizAddress() {
     if (location.protocol === "file:") return new URL("quiz.html", location.href).href;
-    const u = new URL("quiz", location.href);
-    return u.host + u.pathname;
+    return SHORT_QUIZ_URL;
   }
 
   const canControl = () => isHost || mode === "offline";
