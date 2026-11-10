@@ -106,9 +106,7 @@
   .card li { line-height: 1.25; padding-left: 0.9em; position: relative; font-size: 1.12em; }
   .card li::before { content: "◆"; color: var(--gold-soft); position: absolute; left: 0; font-size: 0.55em; top: 0.55em; }
   .card li .main { display: block; }
-  .note { display: block; font-size: 0.8em; color: var(--muted); }
   .era-years { font-size: 2.1em; color: var(--text); line-height: 1.1; margin: 0.05em 0 0.3em; }
-  .era-text { line-height: 1.3; }
   .listen-title { line-height: 1.3; margin-bottom: 0.7em; }
   .listen-card .btn { align-self: flex-start; font-size: 0.9em; }
 
@@ -262,10 +260,10 @@
       return text.replace(/(\d)–(\d)/g, "$1\u2060–\u2060$2").replace(/(\d\.) /g, "$1\u00a0");
     }
 
-    // Punkt: ["Text", "kleine Notiz"]
+    // Punkt: ["Text", "Erklärung"]. Die Erklärungen stehen nur auf den Karteikarten (cards.html).
     function pointList(points) {
-      return el("ul", null, null, points.map(([main, note]) =>
-        el("li", null, null, [el("span", "main", noBreak(main)), note ? el("span", "note", note) : null])
+      return el("ul", null, null, points.map(([main]) =>
+        el("li", null, null, [el("span", "main", noBreak(main))])
       ));
     }
 
@@ -299,10 +297,7 @@
           el("h2", null, e.name)
         ]),
         el("div", "grid", null, [
-          card("Zeitraum", [
-            el("div", "era-years", e.years),
-            el("div", "era-text", e.era)
-          ]),
+          card("Zeitraum", [el("div", "era-years", e.years)]),
           card("Komponisten", [pointList(e.artists)]),
           card("Merkmale", [pointList(e.characteristics)]),
           card("Neuerungen", [pointList(e.innovations)]),

@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Karteikarten</title>
+<style>
+  /* Karteikarten zum Ausdrucken: A4 quer, zwei A5-Karten pro Blatt, in der Mitte durchschneiden. */
+  @page { size: A4 landscape; margin: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: #e9e5de; color: #1b1712; }
+  body { font-family: "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif; }
+
+  .hint { max-width: 60em; margin: 1.5em auto; padding: 0 16px; font-size: 16px; line-height: 1.5; }
+  .hint button { font: inherit; padding: 0.4em 1.2em; border-radius: 999px; border: 1px solid #8c7442; background: #d2ad62; cursor: pointer; }
+
+  .sheet {
+    width: 297mm; height: 210mm; margin: 0 auto 10mm; background: #fff;
+    display: grid; grid-template-columns: 1fr 1fr; position: relative;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  }
+  .sheet::after {
+    content: "✂"; position: absolute; left: 50%; top: 0; bottom: 0;
+    border-left: 1px dashed #9a9081; color: #9a9081; font-size: 14pt; padding-top: 2mm; transform: translateX(-0.5px);
+    text-indent: -0.45em;
+  }
+  .card { padding: 11mm 12mm 9mm; display: flex; flex-direction: column; overflow: hidden; }
+
+  .top { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 2px solid #b8923a; padding-bottom: 2mm; margin-bottom: 3.5mm; }
+  .top h1 { margin: 0; font-weight: normal; font-size: 27pt; }
+  .top .num { font-size: 11pt; color: #8c7442; letter-spacing: 0.08em; }
+  .years { font-size: 13pt; color: #5c5246; }
+
+  .say { font-size: 15pt; line-height: 1.35; margin: 0 0 3mm; padding: 2mm 3mm; background: #f6f0e3; border-left: 3px solid #b8923a; }
+
+  h2 { font-size: 11pt; text-transform: uppercase; letter-spacing: 0.12em; color: #8c7442; font-weight: normal; margin: 2.6mm 0 0.8mm; }
+  ul { margin: 0; padding-left: 5mm; }
+  li { font-size: 14.5pt; line-height: 1.3; margin: 0.4mm 0; }
+  li .ex { color: #5c5246; }
+  li .ex::before { content: " – "; }
+
+  .listen { font-size: 14.5pt; }
+  .next { margin-top: auto; padding-top: 2mm; font-size: 10pt; color: #8c7442; text-align: right; }
+  ol.steps { margin: 0; padding-left: 6mm; }
+  ol.steps li { margin: 1.2mm 0; }
+  .key { display: inline-block; border: 1px solid #9a9081; border-radius: 3px; padding: 0 1.5mm; font-size: 10.5pt; }
+
+  @media print {
+    html, body { background: #fff; }
+    .hint { display: none; }
+    .sheet { margin: 0; box-shadow: none; break-after: page; page-break-after: always; }
+    .sheet:last-child { break-after: auto; page-break-after: auto; }
+  }
+</style>
+</head>
+<body>
+  <div class="hint">
+    <p><strong>Karteikarten zum Ausdrucken.</strong> Auf A4 quer drucken, dann jedes Blatt in der Mitte bei der gestrichelten Linie durchschneiden.
+    Im Druckfenster: Layout <em>Querformat</em>, Ränder <em>Keine</em>, Skalierung <em>Standard / 100 %</em>.</p>
+    <p><button onclick="print()">Drucken</button></p>
+  </div>
+  <div id="cards"></div>
+
+  <script src="epochs.js?v=20261110"></script>
+  <script>
+    const EPOCHS = window.EPOCHS;
+
+    function el(tag, cls, text, children) {
+      const node = document.createElement(tag);
+      if (cls) node.className = cls;
+      if (text != null) node.textContent = text;
+      (children || []).forEach(c => c && node.appendChild(c));
+      return node;
+    }
+
+    function list(points) {
+      return el("ul", null, null, points.map(([main, ex]) =>
+        el("li", null, main, [ex ? el("span", "ex", ex) : null])
+      ));
+    }
+
+    function cardHead(num, title, right) {
+      return el("div", "top", null, [
+        el("div", null, null, [el("div", "num", num), el("h1", null, title)]),
+        right ? el("div", "years", right) : null
+      ]);
+    }
+
+    const cards = [];
+
+    // Begrüßung (Vorschlag, du kannst es auch in deinen eigenen Worten sagen)
+    cards.push(el("div", "card", null, [
+      cardHead("START", "Begrüßung"),
+      el("p", "say", "Hallo! Ich erzähle euch heute über die 7 Epochen der Musik, von ganz alt bis heute."),
+      el("h2", null, "Die 7 Epochen der Reihe nach"),
+      el("ol", "steps", null, EPOCHS.map(e => el("li", null, e.name + "  (" + e.years + ")"))),
+      el("p", "say", "Am Ende spielen wir zusammen ein Quiz. Also gut aufpassen!"),
+      el("p", "next", "Weiter: " + EPOCHS[0].name + " →")
+    ]));
+
+    EPOCHS.forEach((e, i) => {
+      const nextName = i < EPOCHS.length - 1 ? EPOCHS[i + 1].name : "Quiz";
+      cards.push(el("div", "card", null, [
+        cardHead("EPOCHE " + (i + 1) + " VON " + EPOCHS.length, e.name, e.years),
+        el("p", "say", e.era),
+        el("h2", null, "Komponisten"), list(e.artists),
+        el("h2", null, "Merkmale"), list(e.characteristics),
+        el("h2", null, "Neuerungen"), list(e.innovations),
+        el("h2", null, "Instrumente"), list(e.instruments),
+        el("h2", null, "Hörbeispiel"), el("div", "listen", e.listening.title),
+        el("p", "next", "Weiter: " + nextName + " →")
+      ]));
+    });
+
+    // Quiz-Ablauf für den Spielleiter
+    const key = t => el("span", "key", t);
+    const step = (...parts) => el("li", null, null, parts.map(p => typeof p === "string" ? document.createTextNode(p) : p));
+    cards.push(el("div", "card", null, [
+      cardHead("ENDE", "Quiz"),
+      el("p", "say", "Jetzt spielen wir ein Quiz! Tippt die Adresse vom Beamer in euren Laptop und gebt euren Namen ein."),
+      el("h2", null, "Ablauf"),
+      el("ol", "steps", null, [
+        step("Warten, bis alle Namen am Beamer stehen. Blöder Name: draufklicken = rauswerfen."),
+        step("„Quiz starten“ klicken oder ", key("→"), " drücken."),
+        step("Frage vorlesen. Wenn alle geantwortet haben, kommt die Auflösung von selbst."),
+        step("Hängt einer? „Frage beenden“ oder ", key("→"), "."),
+        step(key("→"), " Zwischenstand, ", key("→"), " nächste Frage."),
+        step("Nach Frage 12: Siegerehrung!")
+      ]),
+      el("h2", null, "Punkte"),
+      el("ul", null, null, [
+        el("li", null, "Schnellster Richtiger 10, dann 9, 8 … mindestens 1"),
+        el("li", null, "Falsch −1, keine Antwort −2")
+      ]),
+      el("h2", null, "Nicht vergessen"),
+      el("ul", null, null, [
+        el("li", null, "Vorher als Spielleiter anmelden und „Neues Spiel“ klicken"),
+        el("li", null, "Kein Internet? „Ohne Laptops spielen“")
+      ])
+    ]));
+
+    const root = document.getElementById("cards");
+    for (let i = 0; i < cards.length; i += 2) {
+      root.appendChild(el("div", "sheet", null, [cards[i], cards[i + 1] || el("div", "card")]));
+    }
+  </script>
+</body>
+</html>

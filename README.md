@@ -11,6 +11,7 @@ Schulprojekt Musik: die 7 Epochen der europäischen Musikgeschichte in der richt
 - `config.js`: Firebase-Einstellungen
 - `database.rules.json`: Sicherheitsregeln für die Datenbank
 - `style.css`: gemeinsames Aussehen
+- `cards.html`: Karteikarten zum Ausdrucken, mit allen Erklärungen, die nicht auf den Folien stehen
 
 Kein Build-Schritt, kein Framework. Läuft direkt auf GitHub Pages.
 
