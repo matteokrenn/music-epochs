@@ -25,7 +25,7 @@ window.EPOCHS = [
       ["Orgel", ""],
       ["Harfe", ""]
     ],
-    listening: { title: "Ein Lied von Hildegard von Bingen", query: "Hildegard von Bingen O virtus Sapientiae", url: "" }
+    listening: { title: "Ein Lied von Hildegard von Bingen", query: "Hildegard von Bingen O virtus Sapientiae", url: "https://www.youtube.com/watch?v=C9K9PfjRjxM" }
   },
   {
     id: "renaissance",
@@ -49,7 +49,7 @@ window.EPOCHS = [
       ["Blockflöte", ""],
       ["Orgel", ""]
     ],
-    listening: { title: "Palestrina: Musik für einen Chor", query: "Palestrina Missa Papae Marcelli Kyrie", url: "" }
+    listening: { title: "Palestrina: Musik für einen Chor", query: "Palestrina Missa Papae Marcelli Kyrie", url: "https://www.youtube.com/watch?v=3n8XdKkrqgo" }
   },
   {
     id: "baroque",
@@ -74,7 +74,7 @@ window.EPOCHS = [
       ["Cembalo", "ein Vorgänger vom Klavier"],
       ["Orgel", ""]
     ],
-    listening: { title: "Vivaldi: Die vier Jahreszeiten, „Frühling“", query: "Vivaldi Vier Jahreszeiten Frühling", url: "" }
+    listening: { title: "Vivaldi: Die vier Jahreszeiten, „Frühling“", query: "Vivaldi Vier Jahreszeiten Frühling", url: "https://www.youtube.com/watch?v=Zy6vcxCkE24" }
   },
   {
     id: "classical",
@@ -99,7 +99,7 @@ window.EPOCHS = [
       ["Klarinette", ""],
       ["Orchester", ""]
     ],
-    listening: { title: "Mozart: Eine kleine Nachtmusik", query: "Mozart Eine kleine Nachtmusik", url: "" }
+    listening: { title: "Mozart: Eine kleine Nachtmusik", query: "Mozart Eine kleine Nachtmusik", url: "https://www.youtube.com/watch?v=oy2zDJPIgwc" }
   },
   {
     id: "romantic",
@@ -124,7 +124,7 @@ window.EPOCHS = [
       ["Trompete und Horn", "jetzt mit Drückern (Ventilen)"],
       ["Tuba", ""]
     ],
-    listening: { title: "Chopin: ein ruhiges Klavierstück", query: "Chopin Nocturne op. 9 Nr. 2", url: "" }
+    listening: { title: "Chopin: ein ruhiges Klavierstück", query: "Chopin Nocturne op. 9 Nr. 2", url: "https://www.youtube.com/watch?v=9E6b3swbnWg" }
   },
   {
     id: "modern",
@@ -148,7 +148,7 @@ window.EPOCHS = [
       ["Saxofon", ""],
       ["Ideen aus dem Jazz", ""]
     ],
-    listening: { title: "Ravel: Boléro (1928) – Trommel und Saxofon", query: "Ravel Boléro", url: "" }
+    listening: { title: "Ravel: Boléro (1928) – Trommel und Saxofon", query: "Ravel Boléro", url: "https://www.youtube.com/watch?v=LwLABSm0yYc" }
   },
   {
     id: "new",
