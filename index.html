@@ -70,7 +70,7 @@
   .title-slide h1 { font-size: 4em; line-height: 1.05; }
   .title-slide .de { font-size: 1.6em; }
   .title-slide .sub { font-size: 1.05em; color: var(--muted); max-width: 34em; }
-  .title-slide .by { margin-top: 1.4em; color: var(--muted); font-size: 0.95em; letter-spacing: 0.05em; }
+  .title-slide .by { margin-top: 1em; color: var(--gold); font-size: 1.7em; letter-spacing: 0.04em; }
 
   /* Epoch slide */
   .epoch-head { display: flex; align-items: baseline; gap: 0.7em; flex-wrap: wrap; margin-bottom: 0.55em; }
@@ -330,8 +330,7 @@
     slides.push(el("section", "slide title-slide", null, [
       el("div", "ornament", "◆ ◆ ◆"),
       el("h1", null, "Die Epochen der Musik"),
-      el("p", "sub", "7 Epochen, von ganz alt bis heute."),
-      el("p", "by", "Matteo · Musik · November 2026")
+      el("p", "by", "Matteo & Jakob")
     ]));
 
     EPOCHS.forEach((e, i) => {
