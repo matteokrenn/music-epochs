@@ -61,7 +61,8 @@
   </div>
   <div id="cards"></div>
 
-  <script src="epochs.js?v=20261110d"></script>
+  <script src="epochs.js?v=20261110e"></script>
+  <script src="questions.js?v=20261110e"></script>
   <script>
     const EPOCHS = window.EPOCHS;
 
@@ -125,7 +126,7 @@
         step("Frage vorlesen. Wenn alle geantwortet haben, kommt die Auflösung von selbst."),
         step("Hängt einer? „Frage beenden“ oder ", key("→"), "."),
         step(key("→"), " Zwischenstand, ", key("→"), " nächste Frage."),
-        step("Nach Frage 12: Siegerehrung!")
+        step("Nach Frage " + window.QUESTIONS.length + ": Siegerehrung!")
       ]),
       el("h2", null, "Punkte"),
       el("ul", null, null, [

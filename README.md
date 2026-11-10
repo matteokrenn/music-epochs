@@ -26,7 +26,7 @@ Kein Build-Schritt, kein Framework. Läuft direkt auf GitHub Pages.
 1. Auf der letzten Folie „Spielleiter-Anmeldung“ klicken und mit deiner Firebase-E-Mail und deinem Passwort anmelden. Das musst du nur einmal pro Laptop machen.
 2. Die Mitschüler tippen die Adresse vom Beamer ein und geben ihren Namen ein. Ein Klick auf einen Namen wirft den Spieler raus, der Name bleibt dann gesperrt.
 3. „Quiz starten“. Wenn alle geantwortet haben, wird automatisch aufgelöst, sonst „Frage beenden“ klicken. Danach „Zwischenstand“ und „Nächste Frage“. Die Pfeiltaste → macht immer den nächsten Schritt.
-4. Nach Frage 12 kommt die Siegerehrung.
+4. Nach der letzten Frage kommt die Siegerehrung.
 5. „Neues Spiel“ löscht alle Spieler und Punkte, zum Beispiel nach dem Testen.
 
 Punkte: Der schnellste Richtige bekommt 10, der zweite 9 und so weiter, mindestens 1. Falsch gibt −1, keine Antwort −2.

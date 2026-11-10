@@ -156,7 +156,7 @@ window.EPOCHS = [
     years: "1945 – heute",
     era: "Jetzt ist alles erlaubt.",
     artists: [
-      ["John Cage", "Musik mit Stille und Zufall"],
+      ["John Cage", "Musik mit Zufall"],
       ["Karlheinz Stockhausen", "Musik mit Elektronik"]
     ],
     characteristics: [
@@ -164,8 +164,7 @@ window.EPOCHS = [
       ["Kurze Stücke wiederholen sich immer wieder", ""]
     ],
     innovations: [
-      ["Musik aus dem Computer", ""],
-      ["Ein Stück ganz ohne Töne", "„4′33″“ von John Cage (1952)"]
+      ["Musik aus dem Computer", ""]
     ],
     instruments: [
       ["Computer", ""],

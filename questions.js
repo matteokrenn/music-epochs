@@ -1,4 +1,4 @@
-// Die 12 Quizfragen. Die erste Antwort ist immer die richtige.
+// Die Quizfragen. Die erste Antwort ist immer die richtige.
 // Auf Beamer und Laptops werden die Antworten gleich gemischt (siehe answerOrder).
 window.QUESTIONS = [
   {
@@ -55,11 +55,6 @@ window.QUESTIONS = [
     q: "Was passierte 1913 bei einem Konzert in Paris?",
     a: ["Das Publikum regte sich so auf, dass es Tumult gab", "Das erste Klavier wurde gebaut", "Mozart gab ein Konzert", "Es gab einen Stromausfall"],
     info: "Die Musik von Strawinsky war so neu, dass sich viele Leute aufgeregt haben."
-  },
-  {
-    q: "Was hört man bei dem Stück „4′33″“ von John Cage?",
-    a: ["Keine Töne, nur Stille und Geräusche im Raum", "Ein lautes Orchester", "Einen Chor", "Eine Orgel"],
-    info: "Der Musiker spielt 4 Minuten und 33 Sekunden lang keinen einzigen Ton."
   }
 ];
 
