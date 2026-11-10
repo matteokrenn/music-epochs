@@ -148,7 +148,7 @@ window.EPOCHS = [
       ["Saxofon", ""],
       ["Ideen aus dem Jazz", ""]
     ],
-    listening: { title: "Debussy: „Mondschein“ für Klavier", query: "Debussy Clair de lune", url: "" }
+    listening: { title: "Ravel: Boléro (1928) – Trommel und Saxofon", query: "Ravel Boléro", url: "" }
   },
   {
     id: "new",
