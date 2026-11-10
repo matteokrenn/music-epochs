@@ -172,6 +172,6 @@ window.EPOCHS = [
       ["Synthesizer", ""],
       ["Klavier mit Schrauben zwischen den Saiten", ""]
     ],
-    listening: { title: "Ligeti: Musik wie eine Klangwolke", query: "Ligeti Atmosphères", url: "https://www.youtube.com/watch?v=RCNzwdLwA8g" }
+    listening: { title: "John Cage: Klavier mit Schrauben", query: "John Cage Sonata V prepared piano", url: "https://www.youtube.com/watch?v=jRHoKZRYBlY" }
   }
 ];
