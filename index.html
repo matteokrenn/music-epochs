@@ -109,6 +109,11 @@
   .era-years { font-size: 2.1em; color: var(--text); line-height: 1.1; margin: 0.05em 0 0.3em; }
   .listen-title { line-height: 1.3; margin-bottom: 0.7em; }
   .listen-card .btn { align-self: flex-start; font-size: 0.9em; }
+  .player { position: fixed; inset: 0; z-index: 30; background: rgba(8, 6, 4, 0.94); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1em; }
+  .player[hidden] { display: none; }
+  .player-frame { width: min(92vw, 150vh); aspect-ratio: 16 / 9; background: #000; border-radius: 0.4em; overflow: hidden; }
+  .player-frame iframe { width: 100%; height: 100%; border: 0; }
+  .player-close { font-size: 0.9em; }
 
   /* Live-Quiz (letzte Folie) */
   .quiz-slide { align-items: center; }
@@ -275,6 +280,50 @@
       return l.url || "https://www.youtube.com/results?search_query=" + encodeURIComponent(l.query);
     }
 
+    // YouTube-Link -> Video-ID und Startsekunde. Erkennt watch?v=, youtu.be/ und t=90 bzw. t=1m30s.
+    function youtubeInfo(url) {
+      if (!url) return null;
+      try {
+        const u = new URL(url);
+        let id = u.hostname.endsWith("youtu.be") ? u.pathname.slice(1) : u.searchParams.get("v");
+        if (!id) {
+          const m = u.pathname.match(/\/(embed|shorts|live)\/([^/?]+)/);
+          if (m) id = m[2];
+        }
+        if (!id || !/^[\w-]{6,}$/.test(id)) return null;
+        const t = (u.searchParams.get("t") || u.searchParams.get("start") || "").match(/^(?:(\d+)h)?(?:(\d+)m)?(?:(\d+)s?)?$/);
+        const start = t ? (+(t[1] || 0)) * 3600 + (+(t[2] || 0)) * 60 + (+(t[3] || 0)) : 0;
+        return { id, start };
+      } catch (err) {
+        return null;
+      }
+    }
+
+    // Video-Player über der Folie. Das Video kommt direkt von YouTube.
+    const player = el("div", "player");
+    const playerFrame = el("div", "player-frame");
+    const playerClose = el("button", "player-close", "✕ Schließen");
+    player.hidden = true;
+    player.append(playerFrame, playerClose);
+    document.body.appendChild(player);
+
+    function openPlayer(yt, title) {
+      const f = document.createElement("iframe");
+      f.src = "https://www.youtube-nocookie.com/embed/" + yt.id + "?autoplay=1&rel=0&start=" + yt.start;
+      f.title = title;
+      f.allow = "autoplay; encrypted-media; fullscreen; picture-in-picture";
+      f.allowFullscreen = true;
+      playerFrame.replaceChildren(f);
+      player.hidden = false;
+      playerClose.focus();
+    }
+
+    function closePlayer() {
+      playerFrame.replaceChildren();
+      player.hidden = true;
+    }
+    playerClose.addEventListener("click", closePlayer);
+
     // ---------- Build slides ----------
     const slides = [];
 
@@ -286,10 +335,17 @@
     ]));
 
     EPOCHS.forEach((e, i) => {
-      const link = el("a", "btn", "▶ Jetzt anhören");
-      link.href = listenUrl(e.listening);
-      link.target = "_blank";
-      link.rel = "noopener";
+      const yt = youtubeInfo(e.listening.url);
+      let link;
+      if (yt) {
+        link = el("button", "btn btn-primary", "▶ Abspielen");
+        link.addEventListener("click", () => openPlayer(yt, e.listening.title));
+      } else {
+        link = el("a", "btn", "▶ Jetzt anhören");
+        link.href = listenUrl(e.listening);
+        link.target = "_blank";
+        link.rel = "noopener";
+      }
 
       slides.push(el("section", "slide epoch", null, [
         el("div", "epoch-head", null, [
@@ -361,6 +417,10 @@
     prev.addEventListener("click", () => go(current - 1));
     next.addEventListener("click", () => go(current + 1));
     document.addEventListener("keydown", ev => {
+      if (!player.hidden) {
+        if (ev.key === "Escape") closePlayer();
+        return;
+      }
       if (ev.target.closest && ev.target.closest("input, button, a")) {
         if (ev.target.matches("input") || ev.key === " " || ev.key === "Enter") return;
       }
